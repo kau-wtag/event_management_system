@@ -11,10 +11,20 @@
 </head>
 
 <body>
-  <nav>
-    <div>
-      <a href="<%= root_path %>" style="text-decoration: none; font-size: 24px; font-weight: bold;">EventGo</a>
-      <a href="<%= signup_path %>" style="float: right; text-decoration: none; padding: 10px; border: 1px solid black; border-radius: 5px;">Sign Up</a>
+  <header style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <%= link_to 'EventGo', root_path, style: 'font-size: 24px; font-weight: 600; color: #1a202c; text-decoration: none;' %>
+      </div>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <% if current_user %>
+          <%= link_to current_user.name, current_user, style: 'color: #4a5568; text-decoration: none; transition: color 0.3s ease;' %>
+          <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
+        <% else %>
+          <%= link_to 'Sign Up', signup_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
+          <%= link_to 'Sign In', new_session_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
+        <% end %>
+      </div>
     </div>
   </nav>
 
@@ -28,4 +38,5 @@
 
   <%= yield %>
 </body>
+
 </html>
