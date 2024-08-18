@@ -14,10 +14,13 @@
 </div>
 
 <div>
-  <%= link_to 'Edit', edit_event_path(@event) %>
-  <%= link_to 'Delete', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
-  <br>
-  <br>
+  <% if current_user && current_user.admin? %>
+      <%= link_to 'Edit', edit_event_path(@event) %>
+      <%= link_to 'Delete', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+      <br>
+      <br>
+  <% end %>
+  
   <%= link_to "Who's registered?", event_registrations_path(@event) %>
   <br>
   <%= link_to "Register", new_event_registration_path(@event) %>

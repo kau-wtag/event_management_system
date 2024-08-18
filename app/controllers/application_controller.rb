@@ -37,4 +37,10 @@ private
       redirect_to new_session_url, alert: "Please sign in first"
     end
   end
+
+  def require_admin
+    unless current_user.admin?
+      redirect_to events_url, alert: "Unauthorized access!"
+    end
+  end
 end
