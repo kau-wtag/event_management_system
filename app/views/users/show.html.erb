@@ -2,6 +2,10 @@
 
 <h1><%= @user.name %></h1>
 
+<% if @user.avatar.attached? %>
+  <%= image_tag url_for(@user.avatar) %>
+<% end %>
+
 <p>
   <strong>Name:</strong>
   <%= @user.name %>
