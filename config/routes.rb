@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboard/index'
     resources :events
-    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :destroy]
   end
   root "events#index"
 
