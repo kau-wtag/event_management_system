@@ -1,0 +1,38 @@
+<h1>All Events</h1>
+
+<%= link_to 'Create New Event', new_admin_event_path, class: 'btn btn-primary' %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Starts At</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td>
+            <% if event.image.attached? %>
+                <%= image_tag url_for(event.image), alt: event.name, width: 50, height: 50 %>
+            <% else %>
+                <p>No Image</p>
+            <% end %>
+        </td>
+        <td><%= event.name %></td>
+        <td><%= event.location %></td>
+        <td><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
+        <td><%= number_to_currency(event.price) %></td>
+        <td>
+          <%= link_to 'Show', admin_event_path(event) %> |
+          <%= link_to 'Edit', edit_admin_event_path(event) %> |
+          <%= link_to 'Delete', admin_event_path(event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

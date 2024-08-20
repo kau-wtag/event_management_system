@@ -1,0 +1,62 @@
+<h1>Edit Event</h1>
+
+<%= form_with(model: @event, url: admin_event_path(@event), method: :patch, local: true) do |form| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+        <% @event.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :price %>
+    <%= form.number_field :price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :starts_at %>
+    <%= form.datetime_select :starts_at %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.file_field :image %>
+    <% if @event.image.attached? %>
+      <div>
+      <p>Current image</p> 
+      <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update Event' %>
+  </div>
+<% end %>
+
+<%= link_to 'Back', admin_events_path %>
