@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'dashboard/index'
+    resources :events
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+  end
   root "events#index"
 
   resource :session, only: [:new, :create, :destroy]
