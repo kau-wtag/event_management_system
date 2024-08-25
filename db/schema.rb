@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_25_075023) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_25_111246) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -72,6 +72,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_25_075023) do
     t.boolean "admin", default: false
     t.boolean "email_verified", default: false
     t.string "verification_token"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["verification_token"], name: "index_users_on_verification_token", unique: true
   end

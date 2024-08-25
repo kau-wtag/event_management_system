@@ -13,8 +13,8 @@
 # Create some sample users
 User.destroy_all
 User.create(name: 'admin', email: 'admin@gmail.com', password: 'adminadmin', admin: true)
-User.create(name: 'Jane Smith', email: 'jane@example.com', password: 'password')
-User.create(name: 'Alice Johnson', email: 'alice@example.com', password: 'password')
+# User.create(name: 'Jane Smith', email: 'jane@example.com', password: 'password')
+# User.create(name: 'Alice Johnson', email: 'alice@example.com', password: 'password')
 
 Event.destroy_all
 Event.create([
