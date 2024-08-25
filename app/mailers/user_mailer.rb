@@ -6,4 +6,10 @@ class UserMailer < ApplicationMailer
         @event = event
         mail(to: @user.email, subject: "Registration Confirmation for #{@event.name}")
     end
+
+    def email_verification(user)
+        @user = user
+        @url  = verify_email_url(token: @user.verification_token)
+        mail(to: @user.email, subject: 'Verify your email')
+    end
 end
