@@ -1,0 +1,10 @@
+Hello <%= @user.name %>,
+
+Thank you for registering for the event "<%= @event.name %>"!
+
+The event is scheduled to take place on <%= @event.starts_at.strftime("%B %d, %Y at %I:%M %p") %> at <%= @event.location %>.
+
+We look forward to seeing you there!
+
+Best regards,
+Your Event Management Team

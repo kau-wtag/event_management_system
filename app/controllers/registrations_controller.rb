@@ -17,6 +17,7 @@ class RegistrationsController < ApplicationController
     @registration = @event.registrations.new
     @registration.user = current_user
     if @registration.save
+      UserMailer.registration_confirmation(current_user, @event).deliver_later
       redirect_to event_registrations_url(@event), notice: "Thanks for registering!"
     else
       render :new, status: :unprocessable_entity
