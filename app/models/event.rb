@@ -1,6 +1,7 @@
 class Event < ApplicationRecord
 
   has_many :registrations, dependent: :destroy
+  has_many :users, through: :registrations
   has_one_attached :image
 
   validates :name, presence: true
