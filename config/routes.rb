@@ -11,8 +11,9 @@ Rails.application.routes.draw do
   resources :users
   get 'signup', to: 'users#new'
 
-
   resources :events do
     resources :registrations
   end
+
+  get 'verify_email', to: 'email_verifications#verify', as: 'verify_email'
 end
