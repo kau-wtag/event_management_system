@@ -1,0 +1,15 @@
+<h1>Dear <%= @user.name %>,</h1>
+
+<p>The event "<%= @event.name %>" has been updated. Please review the updated details below:</p>
+
+<ul>
+  <li><strong>Name:</strong> <%= @event.name %></li>
+  <li><strong>Description:</strong> <%= @event.description %></li>
+  <li><strong>Location:</strong> <%= @event.location %></li>
+  <li><strong>Price:</strong> <%= number_to_currency(@event.price) %></li>
+  <li><strong>Capacity:</strong> <%= @event.capacity %> attendees</li>
+  <li><strong>Date and Time:</strong> <%= @event.starts_at.strftime("%B %d, %Y at %I:%M %p") %></li>
+</ul>
+
+<p>Please log in to your account for more details.</p>
+<p>Thank you!</p>

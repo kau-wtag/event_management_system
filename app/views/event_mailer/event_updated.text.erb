@@ -1,0 +1,14 @@
+Dear <%= @user.name %>,
+
+The event "<%= @event.name %>" has been updated. Please review the updated details below:
+
+Name: <%= @event.name %>
+Description: <%= @event.description %>
+Location: <%= @event.location %>
+Price: <%= number_to_currency(@event.price) %>
+Capacity: <%= @event.capacity %> attendees
+Date and Time: <%= @event.starts_at.strftime("%B %d, %Y at %I:%M %p") %>
+
+Please log in to your account for more details.
+
+Thank you!

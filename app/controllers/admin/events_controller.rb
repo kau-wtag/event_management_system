@@ -32,6 +32,7 @@ module Admin
 
     def update
       if @event.update(event_params)
+        send_event_update_notifications(@event)
         redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
       else
         render :edit, status: :unprocessable_entity
@@ -58,6 +59,12 @@ module Admin
 
     def authenticate_admin!
       redirect_to root_path, alert: "You are not authorized to access this page." unless current_user&.admin?
+    end
+
+    def send_event_update_notifications(event)
+      event.users.each do |user|
+        EventMailer.event_updated(event, user).deliver_later
+      end
     end
   end
 end
