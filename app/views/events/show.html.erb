@@ -1,0 +1,19 @@
+<!-- app/views/events/show.html.erb -->
+<div>
+  <h1><%= @event.name %></h1>
+  <div>
+    <p>Location: <%= @event.location %></p>
+    <p>Price: <%= price(@event) %></p>
+    <p>Capacity: <%= pluralize(@event.capacity, 'spot') %></p>
+    <p>Date and Time: <%= day_and_time(@event) %></p>
+  </div>
+  <div>
+    <h2>Description</h2>
+    <p><%= @event.description %></p>
+  </div>
+</div>
+
+<div>
+  <%= link_to 'Edit', edit_event_path(@event) %>
+  <%= link_to 'Delete', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
+</div>

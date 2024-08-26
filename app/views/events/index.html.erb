@@ -1,0 +1,29 @@
+<div>
+  <div>
+    <h1>Events</h1>
+    <%= link_to new_event_path do %>
+      <span>Add New Event</span>
+    <% end %>
+  </div>
+
+  <ul>
+    <% @events.each do |event| %>
+      <li>
+        
+        <div>
+          <h2>
+            <%= link_to(event.name, event_path(event)) %>
+          </h2>
+          <% if price(event) == 'Free' %>
+            <p>Free</p>
+          <% else %>
+            <p><%= price(event) %></p>
+          <% end %>
+        </div>
+        <p>Location: <%= event.location %></p>
+        <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
+        <p><%= day_and_time(event) %></p>
+      </li>
+    <% end %>
+  </ul>
+</div>

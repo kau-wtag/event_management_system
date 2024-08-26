@@ -1,0 +1,61 @@
+<%= form_with(model: event) do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true, required: false %>
+    <% if event.errors[:name].any? %>
+      <p><%= event.errors[:name].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :price %>
+    <%= form.number_field :price, required: false %>
+    <% if event.errors[:price].any? %>
+      <p><%= event.errors[:price].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :location %>
+    <%= form.text_field :location, required: false %>
+    <% if event.errors[:location].any? %>
+      <p><%= event.errors[:location].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity, required: false %>
+    <% if event.errors[:capacity].any? %>
+      <p><%= event.errors[:capacity].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :starts_at, "Starts At" %>
+    <%= form.datetime_local_field :starts_at, required: false %>
+    <% if event.errors[:starts_at].any? %>
+      <p><%= event.errors[:starts_at].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :image_file_name %>
+    <%= form.text_field :image_file_name, required: false %>
+    <% if event.errors[:image_file_name].any? %>
+      <p><%= event.errors[:image_file_name].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 7, required: false %>
+    <% if event.errors[:description].any? %>
+      <p><%= event.errors[:description].first %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
