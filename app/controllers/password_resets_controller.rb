@@ -32,6 +32,7 @@ class PasswordResetsController < ApplicationController
     else
       if @user.update!(password_params)
         @user.update!(reset_password_token: nil) # Clear the reset token after successful update
+        @user.update!(reset_password_sent_at: nil) # Clear the reset token after successful update
         flash[:notice] = "Password has been reset successfully."
         redirect_to new_session_path
       else
