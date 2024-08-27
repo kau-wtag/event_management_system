@@ -30,11 +30,12 @@ class PasswordResetsController < ApplicationController
       flash[:alert] = "Password reset link is invalid or has expired."
       redirect_to new_password_reset_path
     else
-      if true
+      if @user.update!(password_params)
+        @user.update!(reset_password_token: nil) # Clear the reset token after successful update
         flash[:notice] = "Password has been reset successfully."
         redirect_to new_session_path
       else
-        flash[:alert] = "Password reset failed."
+        flash.now[:alert] = "Password reset failed. Please check the form for errors."
         render :edit, status: :unprocessable_entity
       end
     end

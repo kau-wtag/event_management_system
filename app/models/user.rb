@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }, if: :new_record?
+  validates :password, presence: true, length: { minimum: 6 }, if: :password_required?
 
   def generate_password_reset_token!
     self.reset_password_token = SecureRandom.hex(10)
@@ -34,5 +34,9 @@ class User < ApplicationRecord
 
   def send_verification_email
     UserMailer.email_verification(self).deliver_now
+  end
+
+  def password_required?
+    new_record? || password.present?
   end
 end

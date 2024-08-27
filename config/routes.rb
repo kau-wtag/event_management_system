@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   get 'verify_email', to: 'email_verifications#verify', as: 'verify_email'
 
+  resources :password_resets, only: [:new, :create]
   get 'password_resets/:token/edit', to: 'password_resets#edit', as: 'edit_password_reset'
-  resources :password_resets, only: [:new, :create, :edit, :update]
+  patch 'password_resets/:token', to: 'password_resets#update', as: 'password_reset'
 end
