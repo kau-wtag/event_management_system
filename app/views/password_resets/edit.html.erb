@@ -1,0 +1,30 @@
+<h1>Reset Your Password</h1>
+
+<% if @user.errors.any? %>
+  <div class="error_explanation">
+    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with url: password_reset_path(@token), method: :patch do %>
+  <div class="field">
+    <%= label_tag :password %>
+    <%= password_field_tag 'user[password]' %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :password_confirmation %>
+    <%= password_field_tag 'user[password_confirmation]' %>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag "Update Password" %>
+  </div>
+<% end %>
+
+

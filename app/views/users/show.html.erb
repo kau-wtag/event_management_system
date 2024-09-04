@@ -16,11 +16,10 @@
   <%= @user.email %>
 </p>
 
-<% if current_user? @user%>
+<% if current_user? @user %>
   <%= link_to 'Edit', edit_user_path(@user) %> |
   <%= link_to 'Delete', @user, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %> |
 <% end %>
-
 
 <h2>Registrations</h2>
 <% if @registrations.any? %>
