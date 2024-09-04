@@ -1,6 +1,6 @@
 <h1><%= action_name == 'new' ? 'Create New Event' : 'Edit Event' %></h1>
 
-<%= form_with(model: @event, url: action_name == 'new' ? admin_events_path : admin_event_path(@event), local: true) do |form| %>
+<%= form_with(model: @event, url: action_name == 'new' ? admin_events_path : admin_events_path(@event), local: true) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>

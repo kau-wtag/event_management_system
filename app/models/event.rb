@@ -10,7 +10,7 @@ class Event < ApplicationRecord
   validates :location, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
   validates :capacity, numericality: { only_integer: true, greater_than: 0 }
-  
+  validates :category_id, presence: true
 
   def self.upcoming
     where('starts_at > ?', Time.now).order('starts_at')
