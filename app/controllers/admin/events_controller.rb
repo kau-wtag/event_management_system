@@ -54,7 +54,7 @@ module Admin
     end
 
     def event_params
-      params.require(:event).permit(:name, :description, :location, :price, :capacity, :starts_at, :image)
+      params.require(:event).permit(:name, :description, :location, :price, :capacity, :starts_at, :image, :category)
     end
 
     def authenticate_admin!

@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  belongs_to :category, optional: true
 
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations

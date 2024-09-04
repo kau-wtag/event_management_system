@@ -48,6 +48,12 @@
     <%= form.file_field :image %>
   </div>
 
+  <div class="field">
+    <%= form.label :category_id, "Category" %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category" %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
