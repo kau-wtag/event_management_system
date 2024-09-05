@@ -1,0 +1,10 @@
+<%= form_with(model: category, url: category.new_record? ? admin_categories_path : admin_category_path(category)) do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     get 'dashboard/index'
     resources :events
     resources :users, only: [:index, :show, :destroy]
+    resources :categories
   end
   root "events#index"
 
