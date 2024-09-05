@@ -25,6 +25,7 @@
         </div>
         <p>Location: <%= event.location %></p>
         <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
+        <p>Category: <%= event.category.name %></p>
         <p><%= day_and_time(event) %></p>
       </li>
     <% end %>

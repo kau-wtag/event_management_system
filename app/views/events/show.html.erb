@@ -11,6 +11,7 @@
     <p>Location: <%= @event.location %></p>
     <p>Price: <%= price(@event) %></p>
     <p>Capacity: <%= pluralize(@event.capacity, 'spot') %></p>
+    <p>Category: <%= @event.category.name %></p>
     <p>Date and Time: <%= day_and_time(@event) %></p>
   </div>
   <div>
