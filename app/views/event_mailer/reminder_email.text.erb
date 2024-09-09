@@ -1,0 +1,12 @@
+Reminder: Your upcoming event is almost here!
+
+Dear <%= @user.name %>,
+
+This is a friendly reminder that the event <%= @event.name %> is happening on <%= @event.starts_at.strftime("%B %d, %Y at %I:%M %p") %>.
+
+Location: <%= @event.location %>
+Description: <%= @event.description %>
+
+We hope to see you there!
+
+Thank you for participating in our event!

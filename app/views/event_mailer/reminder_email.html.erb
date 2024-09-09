@@ -1,0 +1,12 @@
+<h1>Reminder: Your upcoming event is almost here!</h1>
+
+<p>Dear <%= @user.name %>,</p>
+
+<p>This is a friendly reminder that the event <strong><%= @event.name %></strong> is happening on <%= @event.starts_at.strftime("%B %d, %Y at %I:%M %p") %>.</p>
+
+<p>We hope to see you there!</p>
+
+<p>Location: <%= @event.location %></p>
+<p>Description: <%= @event.description %></p>
+
+<p>Thank you for participating in our event!</p>
