@@ -20,6 +20,7 @@ module Admin
     def create
       @event = Event.new(event_params)
       if @event.save
+        schedule_reminder(@event)
         redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
       else
         render :new, status: :unprocessable_entity
@@ -32,6 +33,7 @@ module Admin
 
     def update
       if @event.update(event_params)
+        schedule_reminder(@event)
         send_event_update_notifications(@event)
         redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
       else
@@ -45,6 +47,11 @@ module Admin
     end
 
     private
+
+    def schedule_reminder(event)
+      # Set reminder to be sent 1 day before the event starts
+      SendEventReminderJob.set(wait_until: event.starts_at - 1.day).perform_later(event)
+    end
 
     def set_event
       @event = Event.find_by(id: params[:id])

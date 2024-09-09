@@ -12,6 +12,7 @@ gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bcrypt', '~> 3.1.7'
+gem 'sidekiq'
 
 group :development, :test do
   gem 'dotenv-rails'
