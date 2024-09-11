@@ -5,19 +5,18 @@
     <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
   </div>
 <% else %>
-  <p>No image available for this event.</p>
+  <p><%= t('admin.events.no_image') %></p>
 <% end %>
 
-<p><strong>Description:</strong> <%= @event.description %></p>
-<p><strong>Location:</strong> <%= @event.location %></p>
-<p><strong>Price:</strong> <%= number_to_currency(@event.price) %></p>
-<p><strong>Capacity:</strong> <%= @event.capacity %></p>
-<p><strong>Starts At:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+<p><strong><%= t('admin.events.event_details.description') %>:</strong> <%= @event.description %></p>
+<p><strong><%= t('admin.events.event_details.location') %>:</strong> <%= @event.location %></p>
+<p><strong><%= t('admin.events.event_details.price') %>:</strong> <%= number_to_currency(@event.price) %></p>
+<p><strong><%= t('admin.events.event_details.capacity') %>:</strong> <%= @event.capacity %></p>
+<p><strong><%= t('admin.events.event_details.starts_at') %>:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
 <p>
-  <strong>Category:</strong>
-  <%= @event.category ? @event.category.name : "No Category Assigned" %>
+  <strong><%= t('admin.events.event_details.category') %>:</strong>
+  <%= @event.category ? @event.category.name : t('admin.events.messages.no_category') %>
 </p>
 
-
-<%= link_to 'Edit', edit_admin_event_path(@event), class: 'btn btn-secondary' %> |
-<%= link_to 'Back to Events', admin_events_path, class: 'btn btn-primary' %>
+<%= link_to t('admin.events.edit_event'), edit_admin_event_path(@event), class: 'btn btn-secondary' %> |
+<%= link_to t('admin.events.index_title'), admin_events_path, class: 'btn btn-primary' %>

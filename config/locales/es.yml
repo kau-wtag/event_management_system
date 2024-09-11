@@ -1,0 +1,30 @@
+es:
+  admin:
+    events:
+      index_title: "Gestionar eventos"
+      new_event: "Crear nuevo evento"
+      edit_event: "Editar evento"
+      delete_event: "Eliminar evento"
+      no_image: "Sin imagen"
+      no_events: "No hay eventos disponibles."
+      event_details:
+        description: "Descripción"
+        location: "Ubicación"
+        price: "Precio"
+        capacity: "Capacidad"
+        starts_at: "Fecha y hora de inicio"
+        category: "Categoría"
+      form:
+        name: "Nombre"
+        description: "Descripción"
+        location: "Ubicación"
+        price: "Precio"
+        capacity: "Capacidad"
+        starts_at: "Fecha y hora de inicio"
+        image: "Imagen"
+        category_id: "Categoría"
+        submit: "Enviar"
+        update: "Actualizar evento"
+      messages:
+        save_error: "%{count} errores impidieron que este evento se guardara"
+        no_category: "No se ha asignado ninguna categoría"

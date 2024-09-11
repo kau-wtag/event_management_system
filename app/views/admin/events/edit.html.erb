@@ -1,9 +1,9 @@
-<h1>Edit Event</h1>
+<h1><%= t('admin.events.edit_event') %></h1>
 
 <%= form_with(model: @event, url: admin_event_path(@event), method: :patch, local: true) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+      <h2><%= t('admin.events.messages.save_error', count: @event.errors.count) %></h2>
 
       <ul>
         <% @event.errors.full_messages.each do |message| %>
@@ -14,54 +14,54 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, t('admin.events.form.name') %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :description %>
+    <%= form.label :description, t('admin.events.form.description') %>
     <%= form.text_area :description %>
   </div>
 
   <div class="field">
-    <%= form.label :location %>
+    <%= form.label :location, t('admin.events.form.location') %>
     <%= form.text_field :location %>
   </div>
 
   <div class="field">
-    <%= form.label :price %>
+    <%= form.label :price, t('admin.events.form.price') %>
     <%= form.number_field :price %>
   </div>
 
   <div class="field">
-    <%= form.label :capacity %>
+    <%= form.label :capacity, t('admin.events.form.capacity') %>
     <%= form.number_field :capacity %>
   </div>
 
   <div class="field">
-    <%= form.label :starts_at %>
+    <%= form.label :starts_at, t('admin.events.form.starts_at') %>
     <%= form.datetime_select :starts_at %>
   </div>
 
   <div class="field">
-    <%= form.label :image %>
+    <%= form.label :image, t('admin.events.form.image') %>
     <%= form.file_field :image %>
     <% if @event.image.attached? %>
       <div>
-      <p>Current image</p> 
-      <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
+        <p>Current image</p>
+        <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
       </div>
     <% end %>
   </div>
 
   <div class="field">
-    <%= form.label :category_id, "Category" %>
+    <%= form.label :category_id, t('admin.events.form.category_id') %>
     <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Select a Category" %>
   </div>
 
   <div class="actions">
-    <%= form.submit 'Update Event' %>
+    <%= form.submit t('admin.events.form.update') %>
   </div>
 <% end %>
 
-<%= link_to 'Back', admin_events_path %>
+<%= link_to t('admin.events.index_title'), admin_events_path %>

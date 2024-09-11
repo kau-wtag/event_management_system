@@ -1,15 +1,15 @@
-<h1>All Events</h1>
+<h1><%= t('admin.events.index_title') %></h1>
 
-<%= link_to 'Create New Event', new_admin_event_path, class: 'btn btn-primary' %>
+<%= link_to t('admin.events.new_event'), new_admin_event_path, class: 'btn btn-primary' %>
 
 <table>
   <thead>
     <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Location</th>
-      <th>Starts At</th>
-      <th>Price</th>
+      <th><%= t('admin.events.form.image') %></th>
+      <th><%= t('admin.events.form.name') %></th>
+      <th><%= t('admin.events.form.location') %></th>
+      <th><%= t('admin.events.form.starts_at') %></th>
+      <th><%= t('admin.events.form.price') %></th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -17,20 +17,19 @@
     <% @events.each do |event| %>
       <tr>
         <td>
-            <% if event.image.attached? %>
-                <%= image_tag url_for(event.image), alt: event.name, width: 50, height: 50 %>
-            <% else %>
-                <p>No Image</p>
-            <% end %>
+          <% if event.image.attached? %>
+            <%= image_tag url_for(event.image), alt: event.name, width: 50, height: 50 %>
+          <% else %>
+            <p><%= t('admin.events.no_image') %></p>
+          <% end %>
         </td>
         <td><%= event.name %></td>
         <td><%= event.location %></td>
         <td><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
         <td><%= number_to_currency(event.price) %></td>
         <td>
-          <%= link_to 'Show', admin_event_path(event) %> |
-          <%= link_to 'Edit', edit_admin_event_path(event) %> |
-          <%= link_to 'Delete', admin_event_path(event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+          <%= link_to t('admin.events.edit_event'), edit_admin_event_path(event) %> |
+          <%= link_to t('admin.events.delete_event'), admin_event_path(event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
         </td>
       </tr>
     <% end %>
