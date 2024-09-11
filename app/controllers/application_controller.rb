@@ -16,6 +16,12 @@ class ApplicationController < ActionController::Base
   # def standard_error(exception)
   #   redirect_back fallback_location: root_path, alert: "An error occurred: #{exception.message}"
   # end
+  
+  before_action :set_locale
+
+  def default_url_options
+    { locale: I18n.locale }
+  end
 
 private
 
@@ -42,5 +48,9 @@ private
     unless current_user.admin?
       redirect_to events_url, alert: "Unauthorized access!"
     end
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 end

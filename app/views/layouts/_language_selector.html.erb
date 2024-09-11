@@ -1,0 +1,6 @@
+<!-- app/views/layouts/_language_selector.html.erb -->
+<div style="display: flex; align-items: center; gap: 4px;">
+  <% I18n.available_locales.each do |locale| %>
+    <%= link_to locale, url_for(locale: locale), style: "text-decoration: #{I18n.locale == locale ? 'underline' : 'none'}; font-weight: #{I18n.locale == locale ? 'bold' : 'normal'};" %>
+  <% end %>
+</div>
