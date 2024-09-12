@@ -25,6 +25,26 @@ es:
         category_id: "Categoría"
         submit: "Enviar"
         update: "Actualizar evento"
+        create: "Crear evento"
+        back: "Volver a eventos"
       messages:
         save_error: "%{count} errores impidieron que este evento se guardara"
         no_category: "No se ha asignado ninguna categoría"
+        event_created: "El evento se creó con éxito."
+        event_updated: "El evento se actualizó con éxito."
+        event_deleted: "El evento se eliminó con éxito."
+        event_not_found: "Evento no encontrado."
+  alerts:
+    unauthorized: "No está autorizado para acceder a esta página."
+    confirm_delete: "¿Está seguro de que desea eliminar esto?"
+  notices:
+    signed_out: "Se ha cerrado la sesión."
+    signed_in: "¡Bienvenido de nuevo!"
+    sign_in: "Por favor, inicie sesión."
+    action_successful: "Acción completada con éxito."
+  actions:
+    edit: "Editar"
+    delete: "Eliminar"
+    back: "Volver"
+    submit: "Enviar"
+    create: "Crear"

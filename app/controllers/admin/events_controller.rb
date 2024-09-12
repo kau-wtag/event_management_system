@@ -21,8 +21,9 @@ module Admin
       @event = Event.new(event_params)
       if @event.save
         schedule_reminder(@event)
-        redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
+        redirect_to admin_event_path(@event), notice: t('admin.events.messages.event_created')
       else
+        flash.now[:alert] = t('admin.events.messages.save_error', count: @event.errors.count)
         render :new, status: :unprocessable_entity
       end
     end
@@ -35,15 +36,16 @@ module Admin
       if @event.update(event_params)
         schedule_reminder(@event)
         send_event_update_notifications(@event)
-        redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
+        redirect_to admin_event_path(@event), notice: t('admin.events.messages.event_updated')
       else
+        flash.now[:alert] = t('admin.events.messages.save_error', count: @event.errors.count)
         render :edit, status: :unprocessable_entity
       end
     end
 
     def destroy
       @event.destroy
-      redirect_to admin_events_path, notice: 'Event was successfully deleted.', status: :see_other
+      redirect_to admin_events_path, notice: t('admin.events.messages.event_deleted'), status: :see_other
     end
 
     private
@@ -56,7 +58,7 @@ module Admin
     def set_event
       @event = Event.find_by(id: params[:id])
       if @event.nil?
-        redirect_to admin_events_path, alert: "Event not found."
+        redirect_to admin_events_path, alert: t('admin.events.messages.event_not_found')
       end
     end
 
@@ -65,7 +67,7 @@ module Admin
     end
 
     def authenticate_admin!
-      redirect_to root_path, alert: "You are not authorized to access this page." unless current_user&.admin?
+      redirect_to root_path, alert: t('admin.auth.not_authorized') unless current_user&.admin?
     end
 
     def send_event_update_notifications(event)

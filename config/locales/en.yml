@@ -25,6 +25,26 @@ en:
         category_id: "Category"
         submit: "Submit"
         update: "Update Event"
+        create: "Create Event"
+        back: "Back to Events"
       messages:
         save_error: "%{count} errors prohibited this event from being saved"
         no_category: "No Category Assigned"
+        event_created: "Event was successfully created."
+        event_updated: "Event was successfully updated."
+        event_deleted: "Event was successfully deleted."
+        event_not_found: "Event not found."
+  alerts:
+    unauthorized: "You are not authorized to access this page."
+    confirm_delete: "Are you sure you want to delete this?"
+  notices:
+    signed_out: "You have been signed out."
+    signed_in: "Welcome back!"
+    sign_in: "Please sign in."
+    action_successful: "Action completed successfully."
+  actions:
+    edit: "Edit"
+    delete: "Delete"
+    back: "Back"
+    submit: "Submit"
+    create: "Create"

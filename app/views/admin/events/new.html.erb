@@ -1,10 +1,9 @@
-<h1><%= action_name == 'new' ? t('admin.events.form.create') : t('admin.events.form.edit') %></h1>
+<h1><%= action_name == 'new' ? t('admin.events.form.create') : t('admin.events.form.update') %></h1>
 
 <%= form_with(model: @event, url: action_name == 'new' ? admin_events_path : admin_event_path(@event), local: true) do |form| %>
   <% if @event.errors.any? %>
     <div id="error_explanation">
       <h2><%= t('admin.events.messages.save_error', count: @event.errors.count) %></h2>
-
       <ul>
         <% @event.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -46,11 +45,17 @@
   <div class="field">
     <%= form.label :image, t('admin.events.form.image') %>
     <%= form.file_field :image %>
+    <% if @event.image.attached? %>
+      <div>
+        <p><%= t('admin.events.form.image') %></p>
+        <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
+      </div>
+    <% end %>
   </div>
 
   <div class="field">
-    <%= form.label :category_id, t('admin.events.form.category') %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: t('admin.events.form.category') %>
+    <%= form.label :category_id, t('admin.events.form.category_id') %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: t('admin.events.form.category_id') %>
   </div>
 
   <div class="actions">

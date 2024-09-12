@@ -18,5 +18,5 @@
   <%= @event.category ? @event.category.name : t('admin.events.messages.no_category') %>
 </p>
 
-<%= link_to t('admin.events.edit_event'), edit_admin_event_path(@event), class: 'btn btn-secondary' %> |
+<%= link_to t('actions.edit'), edit_admin_event_path(@event), class: 'btn btn-secondary' %> |
 <%= link_to t('admin.events.index_title'), admin_events_path, class: 'btn btn-primary' %>
