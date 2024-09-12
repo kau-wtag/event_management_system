@@ -1,12 +1,12 @@
-<h1>Categories</h1>
+<h1><%= t('admin.categories.index_title') %></h1>
 
-<%= link_to 'Create New Category', new_admin_category_path, class: 'btn btn-primary' %>
+<%= link_to t('admin.categories.new_category'), new_admin_category_path, class: 'btn btn-primary' %>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Actions</th>
+      <th><%= t('admin.categories.category_details.name') %></th>
+      <th><%= t('admin.categories.actions') %></th>
     </tr>
   </thead>
   <tbody>
@@ -14,9 +14,9 @@
       <tr>
         <td><%= category.name %></td>
         <td>
-          <%= link_to 'Show', admin_category_path(category), class: 'btn btn-info' %>
-          <%= link_to 'Edit', edit_admin_category_path(category), class: 'btn btn-warning' %>
-          <%= link_to 'Delete', admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+          <%= link_to t('admin.categories.show'), admin_category_path(category), class: 'btn btn-info' %>
+          <%= link_to t('admin.categories.edit'), edit_admin_category_path(category), class: 'btn btn-warning' %>
+          <%= link_to t('admin.categories.delete'), admin_category_path(category), data: { turbo_method: :delete, turbo_confirm: t('admin.categories.confirm_delete') }, class: 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>

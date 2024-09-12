@@ -1,4 +1,4 @@
 <h1><%= @category.name %></h1>
 
-<%= link_to 'Edit', edit_admin_category_path(@category), class: 'btn btn-warning' %>
-<%= link_to 'Back to Categories', admin_categories_path, class: 'btn btn-secondary' %>
+<%= link_to t('admin.categories.edit'), edit_admin_category_path(@category), class: 'btn btn-warning' %>
+<%= link_to t('admin.categories.back_to_categories'), admin_categories_path, class: 'btn btn-secondary' %>

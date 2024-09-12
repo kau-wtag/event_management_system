@@ -1,5 +1,28 @@
 en:
   admin:
+    categories:
+        index_title: "Categories"
+        new_category: "Create New Category"
+        edit_category: "Edit Category"
+        delete_category: "Delete Category"
+        category_details:
+          name: "Name"
+          description: "Description"
+        form:
+          name: "Name"
+          description: "Description"
+          submit: "Submit"
+        messages:
+          created: "Category was successfully created."
+          updated: "Category was successfully updated."
+          deleted: "Category was successfully deleted."
+          save_error: "There were errors while saving the category."
+        back_to_categories: "Back to Categories"
+        actions: "Actions"
+        show: "Show"
+        edit: "Edit"
+        delete: "Delete"
+        confirm_delete: "Are you sure?"
     dashboard:
         title: "Admin Dashboard"
         overview:

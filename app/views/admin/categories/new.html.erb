@@ -1,5 +1,5 @@
-<h1><%= @category.new_record? ? 'Create New Category' : 'Edit Category' %></h1>
+<h1><%= @category.new_record? ? t('admin.categories.new_category') : t('admin.categories.edit_category') %></h1>
 
 <%= render 'form', category: @category %>
 
-<%= link_to 'Back to Categories', admin_categories_path, class: 'btn btn-secondary' %>
+<%= link_to t('admin.categories.back_to_categories'), admin_categories_path, class: 'btn btn-secondary' %>

@@ -1,5 +1,28 @@
 es:
   admin:
+    categories:
+        index_title: "Categorías"
+        new_category: "Crear Nueva Categoría"
+        edit_category: "Editar Categoría"
+        delete_category: "Eliminar Categoría"
+        category_details:
+          name: "Nombre"
+          description: "Descripción"
+        form:
+          name: "Nombre"
+          description: "Descripción"
+          submit: "Enviar"
+        messages:
+          created: "La categoría fue creada exitosamente."
+          updated: "La categoría fue actualizada exitosamente."
+          deleted: "La categoría fue eliminada exitosamente."
+          save_error: "Hubo errores al guardar la categoría."
+        back_to_categories: "Volver a Categorías"
+        actions: "Acciones"
+        show: "Mostrar"
+        edit: "Editar"
+        delete: "Eliminar"
+        confirm_delete: "¿Estás seguro?"
     dashboard:
         title: "Panel de Administración"
         overview:
