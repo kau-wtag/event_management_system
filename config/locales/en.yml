@@ -1,5 +1,35 @@
 en:
   admin:
+    dashboard:
+        title: "Admin Dashboard"
+        overview:
+          title: "Overview"
+          total_users: "Total Users"
+          total_events: "Total Events"
+          total_registrations: "Total Registrations"
+        recent_activity:
+          title: "Recent Activity"
+          recent_users: "Recent User Sign-ups"
+          recent_events: "Recent Events Created"
+          recent_registrations: "Recent Registrations"
+          no_data: "No data available"
+        event_management:
+          title: "Event Management"
+          upcoming_events: "Upcoming Events"
+          sold_out_events: "Sold Out Events"
+          low_registration_events: "Events Needing Attention"
+          sold_out: "Sold Out"
+          available_spots: "Available spots"
+        user_management:
+          title: "User Management"
+          inactive_users: "Inactive Users"
+          last_registration: "Last registration"
+          never_registered: "Never"
+          top_participants: "Top Participants"
+          event_registered: "event"
+        quick_actions:
+          title: "Quick Actions"
+          create_new_event: "Create New Event"
     events:
       index_title: "Manage Events"
       new_event: "Create New Event"

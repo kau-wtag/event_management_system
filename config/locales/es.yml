@@ -1,5 +1,35 @@
 es:
   admin:
+    dashboard:
+        title: "Panel de Administración"
+        overview:
+          title: "Resumen"
+          total_users: "Total de Usuarios"
+          total_events: "Total de Eventos"
+          total_registrations: "Total de Registros"
+        recent_activity:
+          title: "Actividad Reciente"
+          recent_users: "Nuevos Usuarios Registrados"
+          recent_events: "Eventos Creados Recientemente"
+          recent_registrations: "Registros Recientes"
+          no_data: "No hay datos disponibles"
+        event_management:
+          title: "Gestión de Eventos"
+          upcoming_events: "Próximos Eventos"
+          sold_out_events: "Eventos Agotados"
+          low_registration_events: "Eventos que Necesitan Atención"
+          sold_out: "Agotado"
+          available_spots: "Plazas disponibles"
+        user_management:
+          title: "Gestión de Usuarios"
+          inactive_users: "Usuarios Inactivos"
+          last_registration: "Última inscripción"
+          never_registered: "Nunca"
+          top_participants: "Mejores Participantes"
+          event_registered: "evento"
+        quick_actions:
+          title: "Acciones Rápidas"
+          create_new_event: "Crear Nuevo Evento"
     events:
       index_title: "Gestionar eventos"
       new_event: "Crear nuevo evento"
