@@ -1,4 +1,19 @@
 es:
+  password_resets:
+      edit:
+        title: "Restablecer su contraseña"
+      new:
+        title: "¿Olvidó su contraseña?"
+      form:
+        email: "Correo electrónico"
+        password: "Nueva contraseña"
+        password_confirmation: "Confirmar nueva contraseña"
+        reset_password: "Restablecer la contraseña"
+        update_password: "Actualizar contraseña"
+      messages:
+        reset_link_invalid: "El enlace para restablecer la contraseña no es válido o ha expirado."
+        password_reset_success: "La contraseña se ha restablecido correctamente."
+        email_not_found: "Correo electrónico no encontrado."
   registrations:
       index:
         title: "Inscripciones para %{event_name}"

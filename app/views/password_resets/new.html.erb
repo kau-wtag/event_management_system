@@ -1,10 +1,12 @@
-<h1>Forgot Your Password?</h1>
+<h1><%= t('password_resets.new.title') %></h1>
+
 <%= form_with url: password_resets_path, method: :post do %>
   <div class="field">
-    <%= label_tag :email %>
+    <%= label_tag :email, t('password_resets.form.email') %>
     <%= email_field_tag :email, params[:email] %>
   </div>
+
   <div class="actions">
-    <%= submit_tag "Reset Password" %>
+    <%= submit_tag t('password_resets.form.reset_password') %>
   </div>
 <% end %>

@@ -1,8 +1,8 @@
-<h1>Reset Your Password</h1>
+<h1><%= t('password_resets.edit.title') %></h1>
 
 <% if @user.errors.any? %>
   <div class="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <h2><%= pluralize(@user.errors.count, t('errors.prohibited_user_save')) %></h2>
     <ul>
       <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -13,18 +13,16 @@
 
 <%= form_with url: password_reset_path(@token), method: :patch do %>
   <div class="field">
-    <%= label_tag :password %>
+    <%= label_tag :password, t('password_resets.form.password') %>
     <%= password_field_tag 'user[password]' %>
   </div>
 
   <div class="field">
-    <%= label_tag :password_confirmation %>
+    <%= label_tag :password_confirmation, t('password_resets.form.password_confirmation') %>
     <%= password_field_tag 'user[password_confirmation]' %>
   </div>
 
   <div class="actions">
-    <%= submit_tag "Update Password" %>
+    <%= submit_tag t('password_resets.form.update_password') %>
   </div>
 <% end %>
-
-

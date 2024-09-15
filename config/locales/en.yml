@@ -1,4 +1,19 @@
 en:
+  password_resets:
+      edit:
+        title: "Reset Your Password"
+      new:
+        title: "Forgot Your Password?"
+      form:
+        email: "Email"
+        password: "New Password"
+        password_confirmation: "Confirm New Password"
+        reset_password: "Reset Password"
+        update_password: "Update Password"
+      messages:
+        reset_link_invalid: "Password reset link is invalid or has expired."
+        password_reset_success: "Password has been reset successfully."
+        email_not_found: "Email not found."
   registrations:
       index:
         title: "Registrations for %{event_name}"
