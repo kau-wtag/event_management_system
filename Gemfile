@@ -13,6 +13,8 @@ gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq'
+gem 'pg_search'
+gem 'kaminari'
 
 group :development, :test do
   gem 'dotenv-rails'

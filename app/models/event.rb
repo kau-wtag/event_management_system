@@ -1,5 +1,13 @@
 class Event < ApplicationRecord
+  include PgSearch::Model
+
   belongs_to :category, optional: true
+
+  pg_search_scope :search_by_name_and_description, 
+                  against: [:name, :description], 
+                  using: {
+                    tsearch: { prefix: true } # Enables partial matching
+                  }
 
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations

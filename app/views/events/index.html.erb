@@ -1,18 +1,31 @@
+<!-- app/views/events/index.html.erb -->
 <div>
+  <%= form_with url: events_path, method: :get, local: true do %>
+    <%= text_field_tag :search, params[:search], placeholder: t('events.search_placeholder') %>
+    <%= submit_tag t('events.search'), class: 'btn btn-primary' %>
+    <%= link_to t('events.clear_search'), events_path, class: 'btn btn-secondary' if params[:search].present? %>
+  <% end %>
+
   <h1><%= t('events.index_title') %></h1>
 
-  <ul>
-    <% @events.each do |event| %>
-      <li>
-        <div>
-          <h2><%= link_to event.name, event_path(event) %></h2>
-          <p><%= event.price == 0 ? t('events.free') : number_to_currency(event.price) %></p>
-        </div>
-        <p><%= t('events.location') %>: <%= event.location %></p>
-        <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
-        <p><%= t('events.category') %>: <%= event.category.name %></p>
-        <p><%= t('events.date_and_time') %>: <%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
-      </li>
-    <% end %>
-  </ul>
+  <% if @events.any? %>
+    <ul>
+      <% @events.each do |event| %>
+        <li>
+          <div>
+            <h2><%= link_to event.name, event_path(event) %></h2>
+            <p><%= event.price == 0 ? t('events.free') : number_to_currency(event.price) %></p>
+          </div>
+          <p><%= t('events.location') %>: <%= event.location %></p>
+          <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
+          <p><%= t('events.category') %>: <%= event.category.name %></p>
+          <p><%= t('events.date_and_time') %>: <%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+        </li>
+      <% end %>
+    </ul>
+
+    <%= paginate @events %>
+  <% else %>
+    <p><%= t('events.no_results') %></p>
+  <% end %>
 </div>

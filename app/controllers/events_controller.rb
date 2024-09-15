@@ -3,7 +3,11 @@ class EventsController < ApplicationController
   before_action :require_admin, except: [:index, :show]
 
   def index
-    @events = Event.all
+    if params[:search].present?
+      @events = Event.search_by_name_and_description(params[:search]).page(params[:page]).per(10)
+    else
+      @events = Event.all.page(params[:page]).per(2)
+    end
   end
 
   def new

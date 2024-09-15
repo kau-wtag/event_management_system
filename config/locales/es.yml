@@ -81,6 +81,9 @@ es:
   events:
       index_title: "Eventos"
       add_new_event: "Agregar nuevo evento"
+      search_placeholder: "Buscar eventos..."
+      search: "Buscar"
+      clear_search: "Limpiar búsqueda"
       location: "Ubicación"
       category: "Categoría"
       date_and_time: "Fecha y hora"
@@ -90,7 +93,7 @@ es:
       capacity: "Capacidad"
       spots: "espacio"
       image: "Imagen"
-      no_events: "No hay eventos disponibles."
+      no_results: "No se encontraron eventos."
       messages:
         created: "¡Evento creado exitosamente!"
         updated: "¡Evento actualizado exitosamente!"
