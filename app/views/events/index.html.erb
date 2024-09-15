@@ -1,32 +1,23 @@
 <div>
-  <div>
-    <h1>Events</h1>
+  <h1><%= t('events.index_title') %></h1>
 
-    <% if current_user && current_user.admin? %>
-      <%= link_to new_event_path do %>
-        <span>Add New Event</span>
-      <% end %>
+  <% if current_user && current_user.admin? %>
+    <%= link_to new_event_path do %>
+      <span><%= t('events.add_new_event') %></span>
     <% end %>
-  </div>
+  <% end %>
 
   <ul>
     <% @events.each do |event| %>
       <li>
-        
         <div>
-          <h2>
-            <%= link_to(event.name, event_path(event)) %>
-          </h2>
-          <% if price(event) == 'Free' %>
-            <p>Free</p>
-          <% else %>
-            <p><%= price(event) %></p>
-          <% end %>
+          <h2><%= link_to event.name, event_path(event) %></h2>
+          <p><%= event.price == 0 ? t('events.free') : number_to_currency(event.price) %></p>
         </div>
-        <p>Location: <%= event.location %></p>
+        <p><%= t('events.location') %>: <%= event.location %></p>
         <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
-        <p>Category: <%= event.category.name %></p>
-        <p><%= day_and_time(event) %></p>
+        <p><%= t('events.category') %>: <%= event.category.name %></p>
+        <p><%= t('events.date_and_time') %>: <%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
       </li>
     <% end %>
   </ul>

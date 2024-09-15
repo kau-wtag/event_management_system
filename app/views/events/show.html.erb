@@ -1,34 +1,31 @@
-<!-- app/views/events/show.html.erb -->
 <div>
   <% if @event.image.attached? %>
     <p>
-      <strong>Image:</strong><br>
+      <strong><%= t('events.image') %>:</strong><br>
       <%= image_tag @event.image %>
     </p>
   <% end %>
+
   <h1><%= @event.name %></h1>
   <div>
-    <p>Location: <%= @event.location %></p>
-    <p>Price: <%= price(@event) %></p>
-    <p>Capacity: <%= pluralize(@event.capacity, 'spot') %></p>
-    <p>Category: <%= @event.category.name %></p>
-    <p>Date and Time: <%= day_and_time(@event) %></p>
+    <p><%= t('events.location') %>: <%= @event.location %></p>
+    <p><%= t('events.price') %>: <%= @event.price == 0 ? t('events.free') : number_to_currency(@event.price) %></p>
+    <p><%= t('events.capacity') %>: <%= pluralize(@event.capacity, t('events.spots')) %></p>
+    <p><%= t('events.category') %>: <%= @event.category.name %></p>
+    <p><%= t('events.date_and_time') %>: <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
   </div>
   <div>
-    <h2>Description</h2>
+    <h2><%= t('events.description') %></h2>
     <p><%= @event.description %></p>
   </div>
 </div>
 
 <div>
   <% if current_user && current_user.admin? %>
-      <%= link_to 'Edit', edit_event_path(@event) %>
-      <%= link_to 'Delete', event_path(@event), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} %>
-      <br>
-      <br>
+    <%= link_to t('events.edit_event'), edit_event_path(@event) %>
+    <%= link_to t('events.delete_event'), event_path(@event), data: { turbo_method: :delete, turbo_confirm: t('events.confirm_delete') } %>
   <% end %>
   
-  <%= link_to "Who's registered?", event_registrations_path(@event) %>
-  <br>
-  <%= link_to "Register", new_event_registration_path(@event) %>
+  <%= link_to t('events.registered_users'), event_registrations_path(@event) %>
+  <%= link_to t('events.register_link'), new_event_registration_path(@event) %>
 </div>

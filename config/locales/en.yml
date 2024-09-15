@@ -1,4 +1,27 @@
 en:
+  events:
+      index_title: "Events"
+      add_new_event: "Add New Event"
+      location: "Location"
+      category: "Category"
+      date_and_time: "Date and Time"
+      description: "Description"
+      free: "Free"
+      price: "Price"
+      capacity: "Capacity"
+      spots: "spot"
+      image: "Image"
+      no_events: "No events available."
+      messages:
+        created: "Event successfully created!"
+        updated: "Event successfully updated!"
+        deleted: "Event successfully deleted."
+        error: "Error updating event."
+      register_link: "Register"
+      registered_users: "Who's registered?"
+      edit_event: "Edit"
+      delete_event: "Delete"
+      confirm_delete: "Are you sure?"
   admin:
     users:
         index_title: "All Users"
