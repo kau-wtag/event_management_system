@@ -1,19 +1,19 @@
-<!-- app/views/registrations/index.html.erb -->
-<h1>Registrations for <%= link_to @event.name, @event %></h1>
+<h1><%= t('registrations.index.title', event_name: link_to(@event.name, @event)).html_safe %></h1>
+<h2><%= t('registrations.index.people_count', count: @event.registrations.count) %></h2>
 
-<% @registrations.each do |r| %>
-  <table>
-    <thead>
-      <tr>
-        <th>User</th>
-        <th>Registration Date</th>
-      </tr>
-    </thead>
-    <tbody>
+<table>
+  <thead>
+    <tr>
+      <th><%= t('registrations.index.user') %></th>
+      <th><%= t('registrations.index.registration_date') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @registrations.each do |r| %>
       <tr>
         <td><%= r.user.name %></td>
         <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
       </tr>
-    </tbody>
-  </table>
-<% end %>
+    <% end %>
+  </tbody>
+</table>

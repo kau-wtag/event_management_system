@@ -1,6 +1,5 @@
-<h1>Registrations for <%= link_to @event.name %> </h1>
-<h2> Registered <%= @event.registrations.count %> people. </h1>
+<h1><%= t('registrations.new.title', event_name: @event.name) %></h1>
 
 <%= form_with(model: [@event, @registration]) do |f| %>
-    <%= f.submit "Register for Event" %>
+  <%= f.submit t('registrations.form.submit') %>
 <% end %>

@@ -1,4 +1,16 @@
 en:
+  registrations:
+      index:
+        title: "Registrations for %{event_name}"
+        people_count: "Registered %{count} people"
+        user: "User"
+        registration_date: "Registration Date"
+      new:
+        title: "Register for %{event_name}"
+      form:
+        submit: "Register for Event"
+      notices:
+        success: "Thanks for registering!"
   users:
       index_title: "Users"
       show_title: "User Profile"

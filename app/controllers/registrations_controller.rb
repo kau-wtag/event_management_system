@@ -1,5 +1,4 @@
 class RegistrationsController < ApplicationController
-
   before_action :require_signin
 
   def index
@@ -18,7 +17,7 @@ class RegistrationsController < ApplicationController
     @registration.user = current_user
     if @registration.save
       UserMailer.registration_confirmation(current_user, @event).deliver_later
-      redirect_to event_registrations_url(@event), notice: "Thanks for registering!"
+      redirect_to event_registrations_url(@event), notice: t('registrations.notices.success')
     else
       render :new, status: :unprocessable_entity
     end
