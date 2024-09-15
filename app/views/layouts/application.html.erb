@@ -8,23 +8,103 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
+
+  <style>
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    /* Header */
+    .header {
+      grid-column: span 3;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .logo {
+      font-size: 24px;
+      font-weight: 600;
+      color: #1a202c;
+      text-decoration: none;
+    }
+
+    /* Navigation */
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .nav a {
+      color: #4a5568;
+      text-decoration: none;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      text-align: center;
+    }
+
+    .nav a:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Flash Messages */
+    #flash-messages {
+      grid-column: span 3;
+      margin: 20px 0;
+    }
+
+    .flash-message {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 4px;
+      color: white;
+    }
+
+    .flash-notice {
+      background-color: #48bb78;
+    }
+
+    .flash-alert {
+      background-color: #f56565;
+    }
+
+    /* Content */
+    .content {
+      grid-column: span 3;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+  </style>
 </head>
 
 <body>
-  <header style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-      <div style="display: flex; align-items: center; gap: 24px;">
-        <%= link_to 'EventGo', root_path, style: 'font-size: 24px; font-weight: 600; color: #1a202c; text-decoration: none;' %>
-      </div>
+  <div class="container">
+    
+    <!-- Header Section -->
+    <header class="header">
+      <%= link_to 'EventGo', root_path, class: 'logo' %>
       <%= render 'layouts/language_selector' %>
       <% if current_user && current_user.admin? %>
-      <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-        <%= link_to 'All users', users_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
-        <%= link_to 'All Events', events_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
-      </div>
-    <% end %>
+        <div class="nav">
+          <%= link_to 'Events', events_path %>
+        </div>
+      <% end %>
       <div style="display: flex; align-items: center; gap: 16px;">
         <% if current_user %>
+          <% if current_user && current_user.admin? %>
+            <%= link_to 'Admin Dashboard', admin_dashboard_index_path %> |
+          <%end%>
           <%= link_to (current_user.name + (current_user.admin? ? ' (ADMIN)' : '')), current_user, style: 'color: #4a5568; text-decoration: none; transition: color 0.3s ease;' %>
           <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
         <% else %>
@@ -32,19 +112,22 @@
           <%= link_to 'Sign In', new_session_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
         <% end %>
       </div>
+    </header>
+
+    <!-- Flash Messages Section -->
+    <div id="flash-messages">
+      <% flash.each do |key, message| %>
+        <div class="flash-message flash-<%= key %>">
+          <%= message %>
+        </div>
+      <% end %>
     </div>
     
+    <!-- Main Content Section -->
+    <div class="content">
+      <%= yield %>
+    </div>
 
-  </nav>
-
-  <div id="flash-messages">
-    <% flash.each do |key, message| %>
-      <div class="<%= key %>">
-        <%= message %>
-      </div>
-    <% end %>
   </div>
-
-  <%= yield %>
 </body>
 </html>
