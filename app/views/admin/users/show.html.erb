@@ -1,9 +1,9 @@
-<h1>User Details</h1>
+<h1><%= t('admin.users.show_title') %></h1>
 
-<p><strong>Name:</strong> <%= @user.name %></p>
-<p><strong>Email:</strong> <%= @user.email %></p>
-<p><strong>Admin:</strong> <%= @user.admin? ? 'Yes' : 'No' %></p>
-<p><strong>Joined:</strong> <%= @user.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
+<p><strong><%= t('admin.users.user_details.name') %>:</strong> <%= @user.name %></p>
+<p><strong><%= t('admin.users.user_details.email') %>:</strong> <%= @user.email %></p>
+<p><strong><%= t('admin.users.user_details.admin') %>:</strong> <%= @user.admin? ? t('admin.users.yes') : t('admin.users.no') %></p>
+<p><strong><%= t('admin.users.user_details.joined') %>:</strong> <%= @user.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
 
-<%= link_to 'Back to Users', admin_users_path, class: 'btn btn-primary' %> |
-<%= link_to 'Delete User', admin_user_path(@user), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<%= link_to t('admin.users.back_to_users'), admin_users_path, class: 'btn btn-primary' %> |
+<%= link_to t('admin.users.actions.delete'), admin_user_path(@user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'btn btn-danger' %>

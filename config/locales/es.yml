@@ -1,5 +1,22 @@
 es:
   admin:
+    users:
+        index_title: "Todos los Usuarios"
+        show_title: "Detalles del Usuario"
+        delete_confirmation: "¿Estás seguro?"
+        actions:
+          show: "Mostrar"
+          delete: "Eliminar"
+        user_details:
+          name: "Nombre"
+          email: "Correo Electrónico"
+          admin: "Administrador"
+          joined: "Registrado"
+        messages:
+          deleted: "El usuario fue eliminado exitosamente."
+        back_to_users: "Volver a Usuarios"
+        yes: "Sí"
+        no: "No"
     categories:
         index_title: "Categorías"
         new_category: "Crear Nueva Categoría"

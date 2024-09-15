@@ -1,5 +1,22 @@
 en:
   admin:
+    users:
+        index_title: "All Users"
+        show_title: "User Details"
+        delete_confirmation: "Are you sure?"
+        actions:
+          show: "Show"
+          delete: "Delete"
+        user_details:
+          name: "Name"
+          email: "Email"
+          admin: "Admin"
+          joined: "Joined"
+        messages:
+          deleted: "User was successfully deleted."
+        back_to_users: "Back to Users"
+        yes: "Yes"
+        no: "No"
     categories:
         index_title: "Categories"
         new_category: "Create New Category"
