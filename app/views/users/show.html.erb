@@ -1,36 +1,30 @@
-<%= link_to 'All users', users_path %>
-
-<h1><%= @user.name %></h1>
-
-<% if @user.avatar.attached? %>
-  <%= image_tag url_for(@user.avatar) %>
-<% end %>
+<h1><%= t('users.show_title') %></h1>
 
 <p>
-  <strong>Name:</strong>
+  <strong><%= t('users.show.name') %>:</strong>
   <%= @user.name %>
 </p>
 
 <p>
-  <strong>Email:</strong>
+  <strong><%= t('users.show.email') %>:</strong>
   <%= @user.email %>
 </p>
 
 <% if current_user? @user %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-  <%= link_to 'Delete', @user, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %> |
+  <%= link_to t('users.show.edit'), edit_user_path(@user) %> |
+  <%= link_to t('users.show.delete'), @user, data: { turbo_method: :delete, turbo_confirm: t('users.show.confirm_delete') } %>
 <% end %>
 
-<h2>Registrations</h2>
+<h2><%= t('users.show.registrations') %></h2>
 <% if @registrations.any? %>
   <ul>
     <% @registrations.each do |registration| %>
       <li>
         <strong>Event:</strong> <%= link_to registration.event.name, registration.event %><br>
-        <strong>Registered At:</strong> <%= registration.created_at.strftime("%B %d, %Y %I:%M %p") %>
+        <strong><%= t('users.show.registered_at') %>:</strong> <%= registration.created_at.strftime("%B %d, %Y %I:%M %p") %>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>No registrations found.</p>
+  <p><%= t('users.show.no_registrations') %></p>
 <% end %>

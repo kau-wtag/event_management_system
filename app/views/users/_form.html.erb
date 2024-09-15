@@ -1,8 +1,7 @@
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+      <h2><%= pluralize(user.errors.count, t("errors.title")) %> <%= t("errors.prohibited", model: t("users.title")) %>:</h2>
       <ul>
         <% user.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -12,31 +11,31 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name, t('users.form.name'), style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :email, style: "display: block" %>
+    <%= form.label :email, t('users.form.email'), style: "display: block" %>
     <%= form.text_field :email %>
   </div>
 
   <div>
-    <%= form.label :password, style: "display: block" %>
+    <%= form.label :password, t('users.form.password'), style: "display: block" %>
     <%= form.password_field :password %>
   </div>
 
   <div>
-    <%= form.label :password_confirmation, style: "display: block" %>
+    <%= form.label :password_confirmation, t('users.form.password_confirmation'), style: "display: block" %>
     <%= form.password_field :password_confirmation %>
   </div>
 
   <div>
-    <%= form.label :avatar %>
+    <%= form.label :avatar, t('users.form.avatar') %>
     <%= form.file_field :avatar %>
   </div>
 
   <div>
-    <%= form.submit user.new_record? ? 'Create Account' : 'Update Account' %>
+    <%= form.submit user.new_record? ? t('users.form.create_account') : t('users.form.update_account') %>
   </div>
 <% end %>

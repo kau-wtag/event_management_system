@@ -1,4 +1,30 @@
 es:
+  users:
+      index_title: "Usuarios"
+      show_title: "Perfil de Usuario"
+      sign_up: "Registrarse"
+      edit_account: "Editar Cuenta"
+      form:
+        name: "Nombre"
+        email: "Correo Electrónico"
+        password: "Contraseña"
+        password_confirmation: "Confirmación de Contraseña"
+        avatar: "Avatar"
+        create_account: "Crear Cuenta"
+        update_account: "Actualizar Cuenta"
+      show:
+        name: "Nombre"
+        email: "Correo Electrónico"
+        registrations: "Registros"
+        registered_at: "Registrado el"
+        no_registrations: "No se encontraron registros."
+        edit: "Editar"
+        delete: "Eliminar"
+        confirm_delete: "¿Estás seguro?"
+      index:
+        all_users: "Todos los Usuarios"
+        name: "Nombre"
+        email: "Correo Electrónico"
   events:
       index_title: "Eventos"
       add_new_event: "Agregar nuevo evento"

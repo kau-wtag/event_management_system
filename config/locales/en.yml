@@ -1,4 +1,30 @@
 en:
+  users:
+      index_title: "Users"
+      show_title: "User Profile"
+      sign_up: "Sign Up"
+      edit_account: "Edit Account"
+      form:
+        name: "Name"
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password Confirmation"
+        avatar: "Avatar"
+        create_account: "Create Account"
+        update_account: "Update Account"
+      show:
+        name: "Name"
+        email: "Email"
+        registrations: "Registrations"
+        registered_at: "Registered At"
+        no_registrations: "No registrations found."
+        edit: "Edit"
+        delete: "Delete"
+        confirm_delete: "Are you sure?"
+      index:
+        all_users: "All Users"
+        name: "Name"
+        email: "Email"
   events:
       index_title: "Events"
       add_new_event: "Add New Event"
