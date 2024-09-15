@@ -21,11 +21,6 @@
 </div>
 
 <div>
-  <% if current_user && current_user.admin? %>
-    <%= link_to t('events.edit_event'), edit_event_path(@event) %>
-    <%= link_to t('events.delete_event'), event_path(@event), data: { turbo_method: :delete, turbo_confirm: t('events.confirm_delete') } %>
-  <% end %>
-  
   <%= link_to t('events.registered_users'), event_registrations_path(@event) %>
   <%= link_to t('events.register_link'), new_event_registration_path(@event) %>
 </div>
