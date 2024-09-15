@@ -8,23 +8,23 @@ class SessionsController < ApplicationController
       if user.email_verified
         session[:user_id] = user.id
         if user.admin?
-          redirect_to admin_dashboard_index_url, notice: "Welcome back, #{user.name}!"
+          redirect_to admin_dashboard_index_url, notice: t('sessions.create.welcome_back_admin', name: user.name)
         else
-          redirect_to (session[:intended_url] || user), notice: "Welcome back, #{user.name}!"
+          redirect_to (session[:intended_url] || user), notice: t('sessions.create.welcome_back_user', name: user.name)
           session[:intended_url] = nil
         end
       else
-        flash[:alert] = "Please verify your email before logging in."
+        flash[:alert] = t('sessions.create.email_not_verified')
         redirect_to new_session_path
       end
     else
-      flash.now[:alert] = "Invalid email or password"
+      flash.now[:alert] = t('sessions.create.invalid_credentials')
       render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url, status: :see_other, notice: "You've been signed out!"
+    redirect_to root_url, status: :see_other, notice: t('sessions.destroy.signed_out')
   end
 end

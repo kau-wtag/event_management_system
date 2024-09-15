@@ -1,4 +1,18 @@
 es:
+  sessions:
+      new:
+        title: "Iniciar sesión"
+        email: "Correo electrónico"
+        password: "Contraseña"
+        sign_in: "Iniciar sesión"
+        forgot_password: "¿Olvidaste tu contraseña?"
+      create:
+        welcome_back_admin: "¡Bienvenido de nuevo, Administrador %{name}!"
+        welcome_back_user: "¡Bienvenido de nuevo, %{name}!"
+        email_not_verified: "Por favor, verifica tu correo electrónico antes de iniciar sesión."
+        invalid_credentials: "Correo electrónico o contraseña no válidos."
+      destroy:
+        signed_out: "¡Has cerrado sesión!"
   password_resets:
       edit:
         title: "Restablecer su contraseña"

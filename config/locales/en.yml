@@ -1,4 +1,18 @@
 en:
+  sessions:
+      new:
+        title: "Sign In"
+        email: "Email"
+        password: "Password"
+        sign_in: "Sign In"
+        forgot_password: "Forgot your password?"
+      create:
+        welcome_back_admin: "Welcome back, Admin %{name}!"
+        welcome_back_user: "Welcome back, %{name}!"
+        email_not_verified: "Please verify your email before logging in."
+        invalid_credentials: "Invalid email or password."
+      destroy:
+        signed_out: "You've been signed out!"
   password_resets:
       edit:
         title: "Reset Your Password"
