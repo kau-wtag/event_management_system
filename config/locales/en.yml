@@ -1,4 +1,9 @@
 en:
+  email_verifications:
+      verify:
+        success: "Your email has been successfully verified."
+        error: "Something went wrong. Please try again."
+        invalid_token: "Invalid or expired verification link."
   sessions:
       new:
         title: "Sign In"

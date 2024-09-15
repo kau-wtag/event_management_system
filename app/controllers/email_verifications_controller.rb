@@ -4,14 +4,14 @@ class EmailVerificationsController < ApplicationController
 
     if user && !user.email_verified
       if user.update(email_verified: true, verification_token: nil)
-        flash[:notice] = "Your email has been successfully verified."
+        flash[:notice] = t('email_verifications.verify.success')
         redirect_to new_session_path
       else
-        flash[:alert] = "Something went wrong. Please try again."
+        flash[:alert] = t('email_verifications.verify.error')
         redirect_to root_path
       end
     else
-      flash[:alert] = "Invalid or expired verification link."
+      flash[:alert] = t('email_verifications.verify.invalid_token')
       redirect_to root_path
     end
   end

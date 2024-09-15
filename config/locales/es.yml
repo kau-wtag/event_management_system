@@ -1,4 +1,9 @@
 es:
+  email_verifications:
+      verify:
+        success: "Tu correo electrónico ha sido verificado exitosamente."
+        error: "Algo salió mal. Por favor, inténtalo de nuevo."
+        invalid_token: "Enlace de verificación inválido o caducado."
   sessions:
       new:
         title: "Iniciar sesión"
