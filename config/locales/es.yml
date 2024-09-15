@@ -1,4 +1,11 @@
 es:
+  errors:
+      record_not_found: "Registro no encontrado: %{message}"
+      record_invalid: "Registro inválido: %{message}"
+      standard_error: "Ocurrió un error: %{message}"
+  auth:
+    signin_required: "Por favor inicie sesión primero"
+    unauthorized_access: "¡Acceso no autorizado!"
   email_verifications:
       verify:
         success: "Tu correo electrónico ha sido verificado exitosamente."

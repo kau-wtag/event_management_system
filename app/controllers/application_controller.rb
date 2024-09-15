@@ -3,27 +3,25 @@ class ApplicationController < ActionController::Base
   # rescue_from ActiveRecord::RecordInvalid, with: :record_invalid
   # rescue_from StandardError, with: :standard_error
 
-  # private
-
-  # def record_not_found(exception)
-  #   redirect_to root_path, alert: "Record not found: #{exception.message}"
-  # end
-
-  # def record_invalid(exception)
-  #   redirect_back fallback_location: root_path, alert: "Invalid record: #{exception.message}"
-  # end
-
-  # def standard_error(exception)
-  #   redirect_back fallback_location: root_path, alert: "An error occurred: #{exception.message}"
-  # end
-  
   before_action :set_locale
 
   def default_url_options
     { locale: I18n.locale }
   end
 
-private
+  private
+
+  # def record_not_found(exception)
+  #   redirect_to root_path, alert: t('errors.record_not_found', message: exception.message)
+  # end
+
+  # def record_invalid(exception)
+  #   redirect_back fallback_location: root_path, alert: t('errors.record_invalid', message: exception.message)
+  # end
+
+  # def standard_error(exception)
+  #   redirect_back fallback_location: root_path, alert: t('errors.standard_error', message: exception.message)
+  # end
 
   def current_user
     User.find(session[:user_id]) if session[:user_id]
@@ -40,13 +38,13 @@ private
   def require_signin
     unless current_user
       session[:intended_url] = request.url
-      redirect_to new_session_url, alert: "Please sign in first"
+      redirect_to new_session_url, alert: t('auth.signin_required')
     end
   end
 
   def require_admin
-    unless current_user.admin?
-      redirect_to events_url, alert: "Unauthorized access!"
+    unless current_user&.admin?
+      redirect_to events_url, alert: t('auth.unauthorized_access')
     end
   end
 

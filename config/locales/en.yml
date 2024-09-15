@@ -1,4 +1,11 @@
 en:
+  errors:
+      record_not_found: "Record not found: %{message}"
+      record_invalid: "Invalid record: %{message}"
+      standard_error: "An error occurred: %{message}"
+  auth:
+    signin_required: "Please sign in first"
+    unauthorized_access: "Unauthorized access!"
   email_verifications:
       verify:
         success: "Your email has been successfully verified."
