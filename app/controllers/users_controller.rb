@@ -10,6 +10,8 @@ class UsersController < ApplicationController
 
   def show
     @registrations = @user.registrations
+    @favorites = @user.favorites.includes(:event) # Preload events to avoid N+1 query
+    @likes = @user.likes.includes(:event) # Preload events to avoid N+1 query
   end
 
   def new

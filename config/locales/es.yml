@@ -65,6 +65,7 @@ es:
         avatar: "Avatar"
         create_account: "Crear Cuenta"
         update_account: "Actualizar Cuenta"
+      show_title: "Perfil de Usuario"
       show:
         name: "Nombre"
         email: "Correo Electrónico"
@@ -74,6 +75,11 @@ es:
         edit: "Editar"
         delete: "Eliminar"
         confirm_delete: "¿Estás seguro?"
+        favorites: "Eventos Favoritos"
+        no_favorites: "Aún no hay eventos favoritos."
+        likes: "Eventos Que Te Gustan"
+        no_like: "Aún no hay eventos que te gusten."
+        date_and_time: "Fecha y Hora"
       index:
         all_users: "Todos los Usuarios"
         name: "Nombre"

@@ -15,6 +15,7 @@
   <%= link_to t('users.show.delete'), @user, data: { turbo_method: :delete, turbo_confirm: t('users.show.confirm_delete') } %>
 <% end %>
 
+<!-- Registrations Section -->
 <h2><%= t('users.show.registrations') %></h2>
 <% if @registrations.any? %>
   <ul>
@@ -27,4 +28,34 @@
   </ul>
 <% else %>
   <p><%= t('users.show.no_registrations') %></p>
+<% end %>
+
+<!-- Favorites Section -->
+<h2><%= t('users.show.favorites') %></h2>
+<% if @user.favorites.any? %>
+  <ul>
+    <% @user.favorites.each do |favorite| %>
+      <li>
+        <strong>Event:</strong> <%= link_to favorite.event.name, event_path(favorite.event) %><br>
+        <strong><%= t('users.show.date_and_time') %>:</strong> <%= favorite.event.starts_at.strftime("%B %d, %Y %I:%M %p") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t('users.show.no_favorites') %></p>
+<% end %>
+
+<!-- Likes Section -->
+<h2><%= t('users.show.likes') %></h2>
+<% if @user.likes.any? %>
+  <ul>
+    <% @user.likes.each do |like| %>
+      <li>
+        <strong>Event:</strong> <%= link_to like.event.name, event_path(like.event) %><br>
+        <strong><%= t('users.show.date_and_time') %>:</strong> <%= like.event.starts_at.strftime("%B %d, %Y %I:%M %p") %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p><%= t('users.show.no_like') %></p>
 <% end %>
