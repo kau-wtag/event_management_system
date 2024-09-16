@@ -84,6 +84,11 @@ en:
         all_users: "All Users"
         name: "Name"
         email: "Email"
+      messages:
+        created: "User was successfully created!"
+        updated: "User was successfully updated!"
+        deleted: "User was successfully deleted."
+        error: "There was an error processing your request."
   events:
     index_title: "Events"
     add_new_event: "Add New Event"
