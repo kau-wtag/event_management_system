@@ -14,7 +14,11 @@ Rails.application.routes.draw do
     
     resource :session, only: [:new, :create, :destroy]
     
-    resources :users
+    resources :users do
+      member do
+        delete :delete_avatar
+      end
+    end
     get 'signup', to: 'users#new'
     
     resources :events do

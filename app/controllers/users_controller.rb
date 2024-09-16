@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :delete_avatar]
   before_action :require_signin, except: [:new, :create]
-  before_action :require_correct_user, only: [:edit, :update, :destroy]
+  before_action :require_correct_user, only: [:edit, :update, :destroy, :delete_avatar]
   before_action :require_admin, only: [:index]
 
   def index
@@ -21,10 +21,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = t('users.messages.created') # I18n message for user creation success
+      flash[:notice] = "Please check your email to verify your account."
       redirect_to root_path
     else
-      flash.now[:alert] = t('users.messages.error') # I18n message for error
       render :new, status: :unprocessable_entity
     end
   end
@@ -34,10 +33,8 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash[:notice] = t('users.messages.updated') # I18n message for user update success
-      redirect_to @user
+      redirect_to @user, notice: 'User was successfully updated.'
     else
-      flash.now[:alert] = t('users.messages.error') # I18n message for error
       render :edit, status: :unprocessable_entity
     end
   end
@@ -45,8 +42,12 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     reset_session
-    flash[:notice] = t('users.messages.deleted') # I18n message for user deletion success
-    redirect_to root_path, status: :see_other
+    redirect_to root_path, status: :see_other, notice: 'User was successfully deleted.'
+  end
+
+  def delete_avatar
+    @user.avatar.purge
+    redirect_to edit_user_path(@user), notice: 'Avatar was successfully deleted.'
   end
 
   private

@@ -1,3 +1,16 @@
+  <!-- Display the current avatar if it exists -->
+  <% if user.avatar.attached? %>
+    <div>
+      <strong><%= t('users.form.current_avatar') %>:</strong><br>
+      <%= image_tag user.avatar, size: "150x150" %>
+    </div>
+
+    <!-- Button to delete the avatar -->
+    <div>
+      <%= button_to t('users.form.delete_avatar'), delete_avatar_user_path(user), method: :delete, data: { confirm: t('users.form.confirm_delete_avatar') } %>
+    </div>
+  <% end %>
+
 <%= form_with(model: user) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
@@ -30,10 +43,13 @@
     <%= form.password_field :password_confirmation %>
   </div>
 
-  <div>
-    <%= form.label :avatar, t('users.form.avatar') %>
-    <%= form.file_field :avatar %>
+
+  <% if !user.avatar.attached? %>
+    <div>
+      <%= form.label :avatar, t('users.form.avatar') %>
+      <%= form.file_field :avatar %>
   </div>
+  <%end%>
 
   <div>
     <%= form.submit user.new_record? ? t('users.form.create_account') : t('users.form.update_account') %>
