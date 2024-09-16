@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   belongs_to :category, optional: true
 
   pg_search_scope :search_by_name_and_description, 
-                  against: [:name, :description], 
+                  against: [:name, :description, :location], 
                   using: {
                     tsearch: { prefix: true } # Enables partial matching
                   }
