@@ -19,6 +19,9 @@ Rails.application.routes.draw do
     
     resources :events do
       resources :registrations
+      resources :comments, only: [:create, :destroy]
+      resource :like, only: [:create, :destroy]
+      resource :favorite, only: [:create, :destroy]
     end
     
     get 'verify_email', to: 'email_verifications#verify', as: 'verify_email'

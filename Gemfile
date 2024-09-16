@@ -21,6 +21,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails', '~> 6.2'
   gem 'ffaker', '~> 2.21'
+  gem 'letter_opener'
 end
 
 group :development do

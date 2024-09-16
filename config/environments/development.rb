@@ -45,7 +45,7 @@ Rails.application.configure do
   # Actually perform deliveries in development
   config.action_mailer.perform_deliveries = true
 
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.smtp_settings = {
     user_name: '2f0bd57abc33d8',
     password: '8babc8663915fb',

@@ -7,6 +7,7 @@
   <% end %>
 
   <h1><%= @event.name %></h1>
+
   <div>
     <p><%= t('events.location') %>: <%= @event.location %></p>
     <p><%= t('events.price') %>: <%= @event.price == 0 ? t('events.free') : number_to_currency(@event.price) %></p>
@@ -14,6 +15,7 @@
     <p><%= t('events.category') %>: <%= @event.category.name %></p>
     <p><%= t('events.date_and_time') %>: <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
   </div>
+
   <div>
     <h2><%= t('events.description') %></h2>
     <p><%= @event.description %></p>
@@ -21,6 +23,54 @@
 </div>
 
 <div>
+  <!-- Like Button -->
+  <% if @event.likes.find_by(user: current_user) %>
+    <%= button_to t('events.unlike'), event_like_path(@event), method: :delete %>
+  <% else %>
+    <%= button_to t('events.like'), event_like_path(@event), method: :post %>
+  <% end %>
+  <p><%= t('events.likes_count', count: @event.likes.count) %></p> <!-- Display the number of likes -->
+
+  <!-- Favorite Button -->
+  <% if @event.favorites.find_by(user: current_user) %>
+    <%= button_to t('events.remove_favorite'), event_favorite_path(@event), method: :delete %>
+  <% else %>
+    <%= button_to t('events.add_favorite'), event_favorite_path(@event), method: :post %>
+  <% end %>
+  <p><%= t('events.favorites_count', count: @event.favorites.count) %></p> <!-- Display the number of favorites -->
+
+  <!-- Register and View Registered Users -->
   <%= link_to t('events.registered_users'), event_registrations_path(@event) %>
   <%= link_to t('events.register_link'), new_event_registration_path(@event) %>
 </div>
+
+<!-- Comment Form -->
+<% if current_user %>
+  <%= form_with(model: [@event, @event.comments.build]) do |form| %>
+    <div>
+      <%= form.text_area :body, placeholder: t('events.add_comment') %>
+      <%= form.submit t('events.post_comment') %>
+    </div>
+  <% end %>
+<% else %>
+  <p><%= link_to t('events.sign_in_to_comment'), new_session_path %></p>
+<% end %>
+
+<!-- Display Comments -->
+<h2><%= t('events.comments') %></h2>
+<ul>
+  <% @event.comments.each do |comment| %>
+      <% if comment.user %>
+      <li>
+        <!-- Display the commenter's name, or "Anonymous" if the user is missing -->
+          <strong><%= comment.user.name %>:</strong>
+          <!-- Display the comment body -->
+          <%= comment.body %>
+          <!-- Allow the user to delete their own comments -->
+          <% if comment.user == current_user && comment.persisted? %>
+            <%= button_to t('events.delete_comment'), event_comment_path(@event, comment), method: :delete, data: { confirm: t('events.confirm_delete_comment') } %>
+          <% end %>
+        <% end %>
+      </li>
+  <% end %>
+</ul>
