@@ -1,5 +1,9 @@
 <h1><%= t('users.show_title') %></h1>
-
+<% if @user.avatar.attached? %>
+    <div>
+      <%= image_tag @user.avatar, size: "150x150" %>
+    </div>
+<% end %>
 <p>
   <strong><%= t('users.show.name') %>:</strong>
   <%= @user.name %>
