@@ -1,31 +1,78 @@
-<!-- app/views/events/index.html.erb -->
 <div>
-  <%= form_with url: events_path, method: :get, local: true do %>
-    <%= text_field_tag :search, params[:search], placeholder: t('events.search_placeholder') %>
-    <%= submit_tag t('events.search'), class: 'btn btn-primary' %>
-    <%= link_to t('events.clear_search'), events_path, class: 'btn btn-secondary' if params[:search].present? %>
-  <% end %>
-
   <h1><%= t('events.index_title') %></h1>
 
-  <% if @events.any? %>
-    <ul>
-      <% @events.each do |event| %>
-        <li>
-          <div>
-            <h2><%= link_to event.name, event_path(event) %></h2>
-            <p><%= event.price == 0 ? t('events.free') : number_to_currency(event.price) %></p>
-          </div>
-          <p><%= t('events.location') %>: <%= event.location %></p>
-          <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
-          <p><%= t('events.category') %>: <%= event.category.name %></p>
-          <p><%= t('events.date_and_time') %>: <%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
-        </li>
-      <% end %>
-    </ul>
+  <!-- Add a form for search, per page, and filters -->
+  <%= form_with url: events_path, method: :get, local: true, id: "event-search-form" do %>
+    
+    <!-- Search Input -->
+    <div>
+      <%= label_tag :search, t('events.search') %>
+      <%= text_field_tag :search, params[:search] %>
+      <%= submit_tag t('events.search') %>
+      <%= link_to t('events.clear_search'), events_path(category: params[:category], location: params[:location], min_price: params[:min_price], max_price: params[:max_price], start_date: params[:start_date], end_date: params[:end_date]), class: 'btn btn-secondary' %>
+    </div>
 
-    <%= paginate @events %>
-  <% else %>
-    <p><%= t('events.no_results') %></p>
+    <!-- Per Page Selection -->
+    <div>
+      <%= label_tag :per_page, t('events.per_page') %>
+      <%= select_tag :per_page, options_for_select([5, 10, 20, 50], selected: params[:per_page]), onchange: "document.getElementById('event-search-form').submit();" %>
+    </div>
+    
+    <!-- Filter by Category -->
+    <div>
+      <%= label_tag :category, t('events.category') %>
+      <%= select_tag :category, options_for_select(Category.all.pluck(:name, :id), selected: params[:category]), include_blank: true, onchange: "document.getElementById('event-search-form').submit();" %>
+    </div>
+
+    <!-- Filter by Location (Dropdown populated from the database) -->
+    <div>
+      <%= label_tag :location, t('events.location') %>
+      <%= select_tag :location, options_for_select(Event.distinct.pluck(:location).compact, selected: params[:location]), include_blank: true, onchange: "document.getElementById('event-search-form').submit();" %>
+    </div>
+
+    <!-- Filter by Price Range -->
+    <div>
+      <%= label_tag :min_price, t('events.min_price') %>
+      <%= number_field_tag :min_price, params[:min_price] %>
+
+      <%= label_tag :max_price, t('events.max_price') %>
+      <%= number_field_tag :max_price, params[:max_price] %>
+    </div>
+
+    <!-- Filter by Date -->
+    <div>
+      <%= label_tag :start_date, t('events.start_date') %>
+      <%= date_field_tag :start_date, params[:start_date] %>
+
+      <%= label_tag :end_date, t('events.end_date') %>
+      <%= date_field_tag :end_date, params[:end_date] %>
+    </div>
+
+    <!-- Submit Filters Button -->
+    <div>
+      <%= submit_tag t('events.apply_filters'), class: 'btn btn-primary' %>
+      <%= link_to t('events.clear_filters'), events_path(search: params[:search]), class: 'btn btn-secondary' %>
+    </div>
   <% end %>
+
+  <!-- Display Events -->
+  <ul>
+    <% @events.each do |event| %>
+      <li>
+        <div>
+          <h2><%= link_to event.name, event_path(event) %></h2>
+          <p><%= event.price == 0 ? t('events.free') : number_to_currency(event.price) %></p>
+        </div>
+        <p><%= t('events.location') %>: <%= event.location %></p>
+        <p><%= truncate(event.description, length: 35, separator: ' ') %></p>
+        <p><%= t('events.category') %>: <%= event.category.name %></p>
+        <p><%= t('events.date_and_time') %>: <%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+      </li>
+    <% end %>
+  </ul>
+
+  <!-- Pagination Links -->
+  <div>
+    <%= paginate @events %>
+  </div>
 </div>
