@@ -26,7 +26,6 @@
           <td><%= number_to_currency(event.price) %></td>
           <td>
             <%= link_to 'Edit', edit_organizer_event_path(event), class: 'btn btn-secondary' %>
-            <%= link_to 'Delete', organizer_event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
           </td>
         </tr>
       <% end %>
