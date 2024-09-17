@@ -1,0 +1,20 @@
+<h1><%= @event.name %></h1>
+
+<% if @event.image.attached? %>
+  <div>
+    <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px;" %>
+  </div>
+<% end %>
+
+<p><strong>Description:</strong> <%= @event.description %></p>
+<p><strong>Location:</strong> <%= @event.location %></p>
+<p><strong>Price:</strong> <%= number_to_currency(@event.price) %></p>
+<p><strong>Capacity:</strong> <%= @event.capacity %></p>
+<p><strong>Event Start Date:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+
+<p><strong>Registration Start Date:</strong> <%= @event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_start_date.present? %></p>
+<p><strong>Registration End Date:</strong> <%= @event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_end_date.present? %></p>
+
+<%= link_to 'Edit Event', edit_organizer_event_path(@event), class: 'btn btn-secondary' %> |
+<%= link_to t('actions.delete'), organizer_event_path(@event), data: { turbo_method: :delete, turbo_confirm: t('alerts.confirm_delete') } %> |
+<%= link_to 'Back to My Events', organizer_events_path, class: 'btn btn-primary' %>

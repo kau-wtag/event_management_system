@@ -1,0 +1,37 @@
+<h1>My Events</h1>
+
+<%= link_to 'Create New Event', new_organizer_event_path, class: 'btn btn-primary' %>
+
+<% if @events.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Start Date</th>
+        <th>Registration Starts</th>
+        <th>Registration Ends</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr>
+          <td><%= link_to event.name, organizer_event_path(event) %></td>
+          <td><%= event.location %></td>
+          <td><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
+          <td><%= event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if event.registration_start_date.present? %></td>
+          <td><%= event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if event.registration_end_date.present? %></td>
+          <td><%= number_to_currency(event.price) %></td>
+          <td>
+            <%= link_to 'Edit', edit_organizer_event_path(event), class: 'btn btn-secondary' %>
+            <%= link_to 'Delete', organizer_event_path(event), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No events created yet.</p>
+<% end %>

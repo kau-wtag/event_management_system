@@ -9,6 +9,7 @@ class Event < ApplicationRecord
                     tsearch: { prefix: true } # Enables partial matching
                   }
 
+  belongs_to :organizer, class_name: 'User'
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
   has_one_attached :image
