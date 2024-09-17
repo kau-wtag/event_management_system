@@ -24,21 +24,21 @@ class ApplicationController < ActionController::Base
   def require_signin
     unless current_user
       session[:intended_url] = request.url
-      redirect_to new_session_url, alert: t('auth.signin_required')
+      redirect_to root_url, alert: t('auth.signin_required')
     end
   end
 
   # Redirect users who are not organizers
   def require_organizer
     unless current_user&.organizer?
-      redirect_to root_path, alert: t('auth.unauthorized_access')
+      redirect_to root_url, alert: t('auth.unauthorized_access')
     end
   end
 
   # Redirect users who are not admins
   def require_admin
     unless current_user&.admin?
-      redirect_to events_url, alert: t('auth.unauthorized_access')
+      redirect_to root_url, alert: t('auth.unauthorized_access')
     end
   end
 

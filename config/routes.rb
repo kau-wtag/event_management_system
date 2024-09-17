@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
     # Organizer namespace for organizer-specific routes
     namespace :organizer do
+      get 'dashboard/index'
+      get 'events/upcoming', to: 'events#upcoming', as: 'upcoming_events'
       resources :events # Routes like /organizer/events
     end
 
@@ -24,7 +26,7 @@ Rails.application.routes.draw do
     
     # Session management (login/logout)
     resource :session, only: [:new, :create, :destroy]
-    
+
     # Users routes for profile management
     resources :users do
       member do

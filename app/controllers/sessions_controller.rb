@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
         if user.admin?
           redirect_to admin_dashboard_index_url, notice: t('sessions.create.welcome_back_admin', name: user.name)
         elsif user.organizer?
-          redirect_to organizer_events_url, notice: t('sessions.create.welcome_back_organizer', name: user.name)
+          redirect_to organizer_dashboard_index_url, notice: t('sessions.create.welcome_back_organizer', name: user.name)
+          session[:intended_url] = nil
         else
           redirect_to (session[:intended_url] || user), notice: t('sessions.create.welcome_back_user', name: user.name)
           session[:intended_url] = nil
@@ -32,3 +33,4 @@ class SessionsController < ApplicationController
     redirect_to root_url, status: :see_other, notice: t('sessions.destroy.signed_out')
   end
 end
+ 
