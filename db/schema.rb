@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_16_044417) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_17_080720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -70,7 +70,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_044417) do
     t.text "description", null: false
     t.integer "capacity", default: 1
     t.bigint "category_id", null: false
+    t.bigint "organizer_id", null: false
+    t.datetime "registration_start_date"
+    t.datetime "registration_end_date"
     t.index ["category_id"], name: "index_events_on_category_id"
+    t.index ["organizer_id"], name: "index_events_on_organizer_id"
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -106,11 +110,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_044417) do
     t.string "password_digest", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin", default: false
     t.boolean "email_verified", default: false
     t.string "verification_token"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.string "role"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["verification_token"], name: "index_users_on_verification_token", unique: true
   end
@@ -120,6 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_16_044417) do
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "users"
   add_foreign_key "events", "categories"
+  add_foreign_key "events", "users", column: "organizer_id"
   add_foreign_key "favorites", "events"
   add_foreign_key "favorites", "users"
   add_foreign_key "likes", "events"

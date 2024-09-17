@@ -1,3 +1,9 @@
-<h1><%= t('users.sign_up') %></h1>
+<h1>Sign Up</h1>
 
-<%= render 'form', user: @user %>
+<div>
+  <%= link_to 'Sign Up as User', signup_user_path, class: 'btn btn-primary' %> 
+</div>
+
+<div>
+  <%= link_to 'Sign Up as Organizer', signup_organizer_path, class: 'btn btn-secondary' %>
+</div>

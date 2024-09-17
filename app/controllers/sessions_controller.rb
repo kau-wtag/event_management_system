@@ -4,11 +4,15 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
+    
     if user && user.authenticate(params[:password])
       if user.email_verified
         session[:user_id] = user.id
+        
         if user.admin?
           redirect_to admin_dashboard_index_url, notice: t('sessions.create.welcome_back_admin', name: user.name)
+        elsif user.organizer?
+          redirect_to organizer_events_url, notice: t('sessions.create.welcome_back_organizer', name: user.name)
         else
           redirect_to (session[:intended_url] || user), notice: t('sessions.create.welcome_back_user', name: user.name)
           session[:intended_url] = nil

@@ -1,10 +1,14 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :registrations
+  has_many :events, foreign_key: 'organizer_id', dependent: :destroy
   has_one_attached :avatar
+  has_many :registrations
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
+  # Role enum to define user roles
+  enum role: { user: 'user', organizer: 'organizer', admin: 'admin' }
 
   before_create :generate_verification_token
   after_create :send_verification_email
