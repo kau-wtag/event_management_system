@@ -1,98 +1,138 @@
-<div>
+<div class="max-w-7xl mx-auto bg-white rounded-lg p-6 mb-8">
+  
+  <!-- Event Banner Image -->
   <% if @event.image.attached? %>
-    <p>
-      <strong><%= t('events.image') %>:</strong><br>
-      <%= image_tag @event.image %>
-    </p>
-  <% end %>
-
-  <h1><%= @event.name %></h1>
-
-  <h2>Organizer: <%= @event.organizer.name %></h2>
-  <% if current_user %>
-    <% if current_user.following.include?(@event.organizer) %>
-      <%= button_to "Unfollow Organizer", event_follow_path(@event, organizer_id: @event.organizer.id), method: :delete, class: "btn btn-warning" %>
-    <% else %>
-      <%= button_to "Follow Organizer", event_follow_path(@event, organizer_id: @event.organizer.id), method: :post, class: "btn btn-primary" %>
-    <% end %>
-  <% end %>
-
-
-  <div>
-    <p><%= t('events.location') %>: <%= @event.location %></p>
-    <p><%= t('events.price') %>: <%= @event.price == 0 ? t('events.free') : number_to_currency(@event.price) %></p>
-    <p><%= t('events.capacity') %>: <%= pluralize(@event.capacity, t('events.spots')) %></p>
-    <p><%= t('events.category') %>: <%= @event.category.name %></p>
-    <p><%= t('events.date_and_time') %>: <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
-  </div>
-
-  <div>
-    <h2><%= t('events.description') %></h2>
-    <p><%= @event.description %></p>
-  </div>
-</div>
-
-<div>
-  <!-- Like Button -->
-  <% if @event.likes.find_by(user: current_user) %>
-    <%= button_to t('events.unlike'), event_like_path(@event), method: :delete %>
+    <div class="mb-6">
+      <!-- Use a larger inline style to force the correct size -->
+      <%= image_tag @event.image, style: "width: 100%; height: 400px; object-fit: cover; border-radius: 8px;" %>
+    </div>
   <% else %>
-    <%= button_to t('events.like'), event_like_path(@event), method: :post %>
-  <% end %>
-  <p><%= t('events.likes_count', count: @event.likes.count) %></p> <!-- Display the number of likes -->
-
-  <!-- Favorite Button -->
-  <% if @event.favorites.find_by(user: current_user) %>
-    <%= button_to t('events.remove_favorite'), event_favorite_path(@event), method: :delete %>
-  <% else %>
-    <%= button_to t('events.add_favorite'), event_favorite_path(@event), method: :post %>
-  <% end %>
-  <p><%= t('events.favorites_count', count: @event.favorites.count) %></p> <!-- Display the number of favorites -->
-
-  <!-- Register and View Registered Users -->
-  <%= link_to t('events.registered_users'), event_registrations_path(@event) %>
-  <%= link_to t('events.register_link'), new_event_registration_path(@event) %>
-</div>
-
-<!-- Comment Form -->
-<% if current_user %>
-  <%= form_with(model: [@event, @event.comments.build]) do |form| %>
-    <div>
-      <%= form.text_area :body, placeholder: t('events.add_comment') %>
-      <%= form.submit t('events.post_comment') %>
+    <div class="mb-6">
+      <%= image_tag "https://via.placeholder.com/1200x400", style: "width: 100%; height: 400px; object-fit: cover; border-radius: 8px;" %>
     </div>
   <% end %>
-<% else %>
-  <p><%= link_to t('events.sign_in_to_comment'), new_session_path %></p>
-<% end %>
 
-<!-- Display Comments -->
-<h2><%= t('events.comments') %></h2>
-<ul>
-  <% @event.comments.each do |comment| %>
-      <% if comment.user %>
-      <li>
-        <!-- Display the commenter's name, or "Anonymous" if the user is missing -->
-          <strong><%= comment.user.name %>:</strong>
-          <!-- Display the comment body -->
-          <%= comment.body %>
-          <!-- Allow the user to delete their own comments -->
-          <% if comment.user == current_user && comment.persisted? %>
-            <%= button_to t('events.delete_comment'), event_comment_path(@event, comment), method: :delete, data: { confirm: t('events.confirm_delete_comment') } %>
+
+  <!-- Event Title with Organizer and Actions (Like, Follow, Favorite) -->
+  <div class="flex justify-between items-center mb-6">
+    <!-- Event and Organizer Section -->
+    <div>
+      <h1 class="text-4xl font-bold text-indigo-700"><%= @event.name %></h1>
+      <div class="flex items-center space-x-2 mt-2">
+        <p class="text-gray-700">Organized by: <strong><%= @event.organizer.name %></strong></p>
+        <!-- Follow/Unfollow Organizer -->
+        <% if current_user %>
+          <% if current_user.following.include?(@event.organizer) %>
+            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+              <i class="fas fa-user-minus"></i>
+              <span class="ml-1"><%= t('events.unfollow') %></span>
+            <% end %>
+          <% else %>
+            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+              <i class="fas fa-user-plus"></i>
+              <span class="ml-1"><%= t('events.follow') %></span>
+            <% end %>
           <% end %>
         <% end %>
-      </li>
+      </div>
+    </div>
+
+    <!-- Like, Favorite Buttons -->
+    <div class="flex items-center space-x-6">
+      <!-- Like Button -->
+      <div class="flex items-center">
+        <% if @event.likes.find_by(user: current_user) %>
+          <%= button_to event_like_path(@event), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <i class="fas fa-thumbs-up"></i>
+            <span class="ml-1"><%= t('events.like') %> | <%= @event.likes.count %></span>
+          <% end %>
+        <% else %>
+          <%= button_to event_like_path(@event), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <i class="far fa-thumbs-up"></i>
+            <span class="ml-1"><%= t('events.like') %> | <%= @event.likes.count %></span>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- Favorite Button -->
+      <div class="flex items-center">
+        <% if @event.favorites.find_by(user: current_user) %>
+          <%= button_to event_favorite_path(@event), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <i class="fas fa-heart"></i>
+            <span class="ml-1"><%= t('events.favorited') %> | <%= @event.favorites.count %></span>
+          <% end %>
+        <% else %>
+          <%= button_to event_favorite_path(@event), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <i class="far fa-heart"></i>
+            <span class="ml-1"><%= t('events.favorite') %> | <%= @event.favorites.count %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Details -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div>
+      <p><strong><%= t('events.location') %>:</strong> <%= @event.location %></p>
+      <p><strong><%= t('events.price') %>:</strong> <%= @event.price == 0 ? t('events.free') : number_to_currency(@event.price) %></p>
+      <p><strong><%= t('events.capacity') %>:</strong> <%= pluralize(@event.capacity, t('events.spots')) %></p>
+      <p><strong><%= t('events.category') %>:</strong> <%= @event.category.name %></p>
+      <p><strong><%= t('events.date_and_time') %>:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+    </div>
+    <div>
+      <h2 class="text-lg font-semibold mb-2"><%= t('events.description') %></h2>
+      <p><%= @event.description %></p>
+    </div>
+  </div>
+
+  <!-- Register and View Registered Users -->
+  <div class="mb-6">
+    <%= link_to t('events.register_link'), new_event_registration_path(@event), class: "px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700" %>
+    <%= link_to t('events.registered_users'), event_registrations_path(@event), class: "ml-4 px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400" %>
+  </div>
+
+  <!-- Comment Form -->
+  <% if current_user %>
+    <div class="mb-6">
+      <%= form_with(model: [@event, @event.comments.build], local: true) do |form| %>
+        <div>
+          <%= form.text_area :body, placeholder: t('events.add_comment'), class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+          <%= form.submit t('events.post_comment'), class: "mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p><%= link_to t('events.sign_in_to_comment'), new_session_path, class: "text-indigo-600 hover:underline" %></p>
   <% end %>
-</ul>
 
-<h2>Rate this Event</h2>
+  <!-- Display Comments -->
+  <div class="mb-6">
+    <h2 class="text-2xl font-semibold mb-4"><%= t('events.comments') %></h2>
+    <ul class="space-y-4">
+      <% @event.comments.each do |comment| %>
+        <li class="bg-gray-100 p-4 rounded-md">
+          <strong><%= comment.user ? comment.user.name : "Anonymous" %>:</strong>
+          <p class="mt-2"><%= comment.body %></p>
+          <!-- Allow user to delete their own comments -->
+          <% if comment.user == current_user && comment.persisted? %>
+            <%= button_to t('events.delete_comment'), event_comment_path(@event, comment), method: :delete, class: "mt-2 text-red-500 hover:underline", data: { confirm: t('events.confirm_delete_comment') } %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
-<% if current_user && current_user.ratings.find_by(event_id: @event.id) %>
-  <% rating = current_user.ratings.find_by(event_id: @event.id) %>
-  <p>You rated this event: <%= rating.rating %> / 10</p>
-  <p>Review: <%= rating.review %></p>
-  <%= link_to 'Edit Review', edit_event_rating_path(@event, rating) %> |
-  <%= link_to 'Delete Review', event_rating_path(@event, rating), method: :delete, data: { confirm: 'Are you sure?' } %>
-<% else %>
-  <%= link_to 'Leave a Review', new_event_rating_path(@event) %>
-<% end %>
+  <!-- Rate this Event -->
+  <h2 class="text-2xl font-semibold mb-4">Rate this Event</h2>
+  <% if current_user && current_user.ratings.find_by(event_id: @event.id) %>
+    <% rating = current_user.ratings.find_by(event_id: @event.id) %>
+    <p class="mb-2">You rated this event: <%= rating.rating %> / 10</p>
+    <p class="mb-2">Review: <%= rating.review %></p>
+    <%= link_to 'Edit Review', edit_event_rating_path(@event, rating), class: "text-indigo-600 hover:underline" %> |
+    <%= link_to 'Delete Review', event_rating_path(@event, rating), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-600 hover:underline" %>
+  <% else %>
+    <%= link_to 'Leave a Review', new_event_rating_path(@event), class: "text-indigo-600 hover:underline" %>
+  <% end %>
+
+</div>
