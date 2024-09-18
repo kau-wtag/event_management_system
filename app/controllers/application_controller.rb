@@ -29,6 +29,13 @@ class ApplicationController < ActionController::Base
   end
 
   # Redirect users who are not organizers
+  def require_user
+    unless current_user&.user?
+      redirect_to root_url, alert: t('auth.unauthorized_access')
+    end
+  end
+
+  # Redirect users who are not organizers
   def require_organizer
     unless current_user&.organizer?
       redirect_to root_url, alert: t('auth.unauthorized_access')

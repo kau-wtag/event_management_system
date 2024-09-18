@@ -1,5 +1,6 @@
 class RatingsController < ApplicationController
   before_action :require_signin
+  before_action :require_user
   before_action :set_event
 
   def new
