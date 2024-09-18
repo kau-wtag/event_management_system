@@ -5,130 +5,68 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
-
-  <style>
-    /* Container */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    /* Header */
-    .header {
-      grid-column: span 3;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .header .logo {
-      font-size: 24px;
-      font-weight: 600;
-      color: #1a202c;
-      text-decoration: none;
-    }
-
-    /* Navigation */
-    .nav {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .nav a {
-      color: #4a5568;
-      text-decoration: none;
-      transition: color 0.3s ease, background-color 0.3s ease;
-      text-align: center;
-    }
-
-    .nav a:hover {
-      background-color: #f1f1f1;
-    }
-
-    /* Flash Messages */
-    #flash-messages {
-      grid-column: span 3;
-      margin: 20px 0;
-    }
-
-    .flash-message {
-      margin-bottom: 20px;
-      padding: 10px;
-      border-radius: 4px;
-      color: white;
-    }
-
-    .flash-notice {
-      background-color: #48bb78;
-    }
-
-    .flash-alert {
-      background-color: #f56565;
-    }
-
-    /* Content */
-    .content {
-      grid-column: span 3;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-  </style>
 </head>
 
-<body>
-  <div class="container">
-    
-    <!-- Header Section -->
-    <header class="header">
-      <%= link_to 'EventGo', root_path, class: 'logo' %>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- Full-Width Header Section -->
+  <header class="bg-white shadow-md w-full z-10 relative">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <%= link_to 'EventGo', root_path, class: 'text-3xl font-bold text-indigo-600 hover:text-indigo-800' %>
+
       <%= render 'layouts/language_selector' %>
+
       <% if current_user && current_user.admin? %>
-        <div class="nav">
-          <%= link_to 'Events', events_path %>
-        </div>
+        <nav class="flex space-x-4">
+          <%= link_to 'Events', events_path, class: 'text-gray-700 hover:text-indigo-600' %>
+        </nav>
       <% end %>
-      <div style="display: flex; align-items: center; gap: 16px;">
+
+      <div class="flex items-center space-x-4">
         <% if current_user %>
-          <% if current_user && current_user.admin? %>
-            <%= link_to 'Admin Dashboard', admin_dashboard_index_path %> |
-          <%end%>
-          <%= link_to (current_user.name + (current_user.admin? ? ' (ADMIN)' : '')), current_user, style: 'color: #4a5568; text-decoration: none; transition: color 0.3s ease;' %>
-          <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
+          <% if current_user.admin? %>
+            <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: 'text-gray-700 hover:text-indigo-600' %> |
+          <% end %>
+          
+          <!-- Check if the current user has an avatar attached -->
+          <% if current_user.avatar.attached? %>
+            <%= image_tag current_user.avatar, class: "rounded-full h-10 w-10 object-cover", style: "width: 40px; height: 40px;" %>
+          <% end %>
+
+          
+          <%= link_to (current_user.name + (current_user.admin? ? ' (ADMIN)' : '')), current_user, class: 'text-gray-700 hover:text-indigo-600 flex items-center space-x-2' %>
+          
+          <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 hover:bg-gray-200 hover:text-gray-900' %>
         <% else %>
-          <%= link_to 'Sign Up', signup_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
-          <%= link_to 'Sign In', new_session_path, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
+          <%= link_to 'Sign Up', signup_path, class: 'px-4 py-2 border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white' %>
+          <%= link_to 'Sign In', new_session_path, class: 'px-4 py-2 border border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white' %>
         <% end %>
       </div>
-    </header>
-
-    <!-- Flash Messages Section -->
-    <div id="flash-messages">
-      <% flash.each do |key, message| %>
-        <div class="flash-message flash-<%= key %>">
-          <%= message %>
-        </div>
-      <% end %>
     </div>
-    
-    <!-- Main Content Section -->
-    <div class="content">
-      <%= yield %>
-    </div>
+  </header>
 
-  </div>
+  <!-- Flash Messages Section -->
+  <% if flash.any? %> 
+    <!-- Full-width container for flash messages -->
+    <div id="flash-messages" class="w-full bg-gray-100">
+      <div class="max-w-7xl mx-auto space-y-4">
+        <% flash.each do |key, message| %>
+          <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white">
+            <%= message %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Main Content Section -->
+  <main class="max-w-7xl mx-auto px-4 py-6 bg-white">
+    <%= yield %>
+  </main>
+
 </body>
 </html>
