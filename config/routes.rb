@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resource :like, only: [:create, :destroy]
       resource :favorite, only: [:create, :destroy]
       resources :ratings, only: [:new, :create, :edit, :update, :destroy]
+      resource :follow, only: [:create, :destroy]
     end
     
     # Email verification route

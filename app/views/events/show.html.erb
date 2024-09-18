@@ -8,6 +8,16 @@
 
   <h1><%= @event.name %></h1>
 
+  <h2>Organizer: <%= @event.organizer.name %></h2>
+  <% if current_user %>
+    <% if current_user.following.include?(@event.organizer) %>
+      <%= button_to "Unfollow Organizer", event_follow_path(@event, organizer_id: @event.organizer.id), method: :delete, class: "btn btn-warning" %>
+    <% else %>
+      <%= button_to "Follow Organizer", event_follow_path(@event, organizer_id: @event.organizer.id), method: :post, class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+
+
   <div>
     <p><%= t('events.location') %>: <%= @event.location %></p>
     <p><%= t('events.price') %>: <%= @event.price == 0 ? t('events.free') : number_to_currency(@event.price) %></p>

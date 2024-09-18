@@ -7,6 +7,14 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :ratings, dependent: :destroy
+  
+  # Organizers who are followed by users
+  has_many :follows_as_organizer, foreign_key: :organizer_id, class_name: 'Follow', dependent: :destroy
+  has_many :followers, through: :follows_as_organizer, source: :follower
+
+  # Users who are following organizers
+  has_many :follows_as_follower, foreign_key: :follower_id, class_name: 'Follow', dependent: :destroy
+  has_many :following, through: :follows_as_follower, source: :organizer
 
   # Role enum to define user roles
   enum role: { user: 'user', organizer: 'organizer', admin: 'admin' }
