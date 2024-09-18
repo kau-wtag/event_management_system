@@ -1,47 +1,95 @@
 <div class="dashboard-container">
-</div>
   <h1>Welcome, <%= current_user.name %> (Organizer)</h1>
 
-  <!-- Total Events -->
-  <div class="dashboard-card">
-    <h3>Total Events Organized</h3>
-    <p><%= @total_events %></p>
+  <!-- Events Summary -->
+  <div class="dashboard-section">
+    <h2>Events Summary</h2>
+    <div class="dashboard-group">
+      <!-- Total Events -->
+      <div class="dashboard-card">
+        <h3>Total Events Organized</h3>
+        <p><%= @total_events %></p>
+      </div>
+
+      <!-- Upcoming Events -->
+      <div class="dashboard-card">
+        <h3>Upcoming Events</h3>
+        <p><%= @upcoming_events %></p>
+      </div>
+
+      <!-- Past Events -->
+      <div class="dashboard-card">
+        <h3>Past Events</h3>
+        <p><%= @past_events %></p>
+      </div>
+    </div>
   </div>
 
-  <!-- Upcoming Events -->
-  <div class="dashboard-card">
-    <h3>Upcoming Events</h3>
-    <p><%= @upcoming_events %></p>
-  </div>
-
-  <!-- Past Events -->
-  <div class="dashboard-card">
-    <h3>Past Events</h3>
-    <p><%= @past_events %></p>
-  </div>
-
-  <!-- List of Events with Registrations and Revenue -->
-  <div class="dashboard-card">
-    <h3>Event Details</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Event Name</th>
-          <th>Registrations</th>
-          <th>Revenue</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @events.each do |event| %>
-          <tr>
-            <td>
-              <%= link_to event.name, organizer_event_path(event) %>
-            </td>
-            <td><%= event.registrations.count %></td>
-            <td>$<%= event.price * event.registrations.count %></td>
-          </tr>
+  <!-- Events Performance -->
+  <div class="dashboard-section">
+    <h2>Events Performance Metrics</h2>
+    <div class="dashboard-group">
+      <!-- Top Performing Event -->
+      <div class="dashboard-card">
+        <h3>Top Performing Event</h3>
+        <% if @top_performing_event %>
+          <p><%= link_to @top_performing_event.name, organizer_event_path(@top_performing_event) %> - <%= @top_performing_event.registrations.count %> registrations</p>
+        <% else %>
+          <p>No registrations yet.</p>
         <% end %>
-      </tbody>
-    </table>
+      </div>
+
+      <!-- Least Performing Event -->
+      <div class="dashboard-card">
+        <h3>Least Performing Event</h3>
+        <% if @least_performing_event %>
+          <p><%= link_to @least_performing_event.name, organizer_event_path(@least_performing_event) %> - <%= @least_performing_event.registrations.count %> registrations</p>
+        <% else %>
+          <p>No events available.</p>
+        <% end %>
+      </div>
+
+      <!-- Average Registrations per Event -->
+      <div class="dashboard-card">
+        <h3>Average Registrations per Event</h3>
+        <p><%= @average_registrations_per_event ? @average_registrations_per_event.round(2) : "No data available" %></p>
+      </div>
+
+      <!-- Average Revenue per Event -->
+      <div class="dashboard-card">
+        <h3>Average Revenue per Event</h3>
+        <p>$<%= @average_revenue_per_event ? @average_revenue_per_event.round(2) : "No data available" %></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- List of Events -->
+  <div class="dashboard-section">
+    <h2>Event Details</h2>
+    <div class="dashboard-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Event Name</th>
+            <th>Registrations</th>
+            <th>Revenue</th>
+            <th>Booking Percentage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @events.each do |event| %>
+            <tr>
+              <td><%= link_to event.name, organizer_event_path(event) %></td>
+              <td><%= event.registrations.count %></td>
+              <td>$<%= event.price * event.registrations.count %></td>
+              <td>
+                <% booking_percentage = (event.registrations.count.to_f / event.capacity * 100).round(2) %>
+                <%= "#{booking_percentage}% booked" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
