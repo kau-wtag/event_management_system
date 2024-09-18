@@ -1,6 +1,33 @@
 <!-- app/views/layouts/_language_selector.html.erb -->
-<div style="display: flex; align-items: center; gap: 4px;">
-  <% I18n.available_locales.each do |locale| %>
-    <%= link_to locale, url_for(locale: locale), style: "text-decoration: #{I18n.locale == locale ? 'underline' : 'none'}; font-weight: #{I18n.locale == locale ? 'bold' : 'normal'};" %>
-  <% end %>
+<div class="relative inline-block text-left">
+  <!-- Dropdown Button with Default Language -->
+  <button id="language-selector-btn" type="button" class="inline-flex justify-center rounded-full border border-gray-300 shadow-sm px-3 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="true" aria-haspopup="true">
+    <%= I18n.locale.to_s.upcase %> <!-- Display the current language -->
+  </button>
+
+  <!-- Dropdown Menu -->
+  <div id="language-dropdown" class="origin-top-right absolute right-0 mt-2 w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="language-selector-btn">
+    <div class="py-1" role="none">
+      <% I18n.available_locales.each do |locale| %>
+        <%= link_to locale.to_s.upcase, url_for(locale: locale), class: "block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 #{I18n.locale == locale ? 'font-bold text-indigo-600' : ''}" %>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+<!-- Script to toggle the dropdown -->
+<script>
+  document.getElementById('language-selector-btn').addEventListener('click', function() {
+    const dropdown = document.getElementById('language-dropdown');
+    dropdown.classList.toggle('hidden');
+  });
+
+  // Hide the dropdown when clicking outside of it
+  document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('language-dropdown');
+    const button = document.getElementById('language-selector-btn');
+    if (!button.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.classList.add('hidden');
+    }
+  });
+</script>
