@@ -36,3 +36,6 @@
 
 # Ignore database configuration file
 /config/database.yml
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

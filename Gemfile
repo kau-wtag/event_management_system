@@ -15,6 +15,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'sidekiq'
 gem 'pg_search'
 gem 'kaminari'
+gem 'tailwindcss-rails'
 
 group :development, :test do
   gem 'dotenv-rails'
@@ -25,6 +26,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
   gem 'web-console'
   gem 'pry-rails'
 end
