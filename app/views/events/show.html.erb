@@ -74,3 +74,15 @@
       </li>
   <% end %>
 </ul>
+
+<h2>Rate this Event</h2>
+
+<% if current_user && current_user.ratings.find_by(event_id: @event.id) %>
+  <% rating = current_user.ratings.find_by(event_id: @event.id) %>
+  <p>You rated this event: <%= rating.rating %> / 10</p>
+  <p>Review: <%= rating.review %></p>
+  <%= link_to 'Edit Review', edit_event_rating_path(@event, rating) %> |
+  <%= link_to 'Delete Review', event_rating_path(@event, rating), method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+  <%= link_to 'Leave a Review', new_event_rating_path(@event) %>
+<% end %>

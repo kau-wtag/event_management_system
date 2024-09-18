@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :ratings, dependent: :destroy
 
   # Role enum to define user roles
   enum role: { user: 'user', organizer: 'organizer', admin: 'admin' }

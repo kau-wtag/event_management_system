@@ -16,6 +16,7 @@ class Event < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :ratings, dependent: :destroy
 
   validates :name, presence: true
   validates :description, presence: true, length: { minimum: 10 }
@@ -34,6 +35,10 @@ class Event < ApplicationRecord
 
   def sold_out?
     (capacity - registrations.size).zero?
+  end
+
+  def average_rating
+    ratings.average(:rating).to_f.round(2) if ratings.any?
   end
 
 end

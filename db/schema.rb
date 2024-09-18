@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_17_080720) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_18_043109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "plpgsql"
@@ -95,6 +95,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_17_080720) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "ratings", force: :cascade do |t|
+    t.integer "rating", null: false
+    t.text "review"
+    t.bigint "user_id", null: false
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_ratings_on_event_id"
+    t.index ["user_id", "event_id"], name: "index_ratings_on_user_id_and_event_id", unique: true
+    t.index ["user_id"], name: "index_ratings_on_user_id"
+  end
+
   create_table "registrations", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "event_id", null: false
@@ -129,6 +141,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_17_080720) do
   add_foreign_key "favorites", "users"
   add_foreign_key "likes", "events"
   add_foreign_key "likes", "users"
+  add_foreign_key "ratings", "events"
+  add_foreign_key "ratings", "users"
   add_foreign_key "registrations", "events"
   add_foreign_key "registrations", "users"
 end

@@ -1,0 +1,17 @@
+<h1>Edit Your Review</h1>
+
+<%= form_with model: [@event, @rating], local: true do |f| %>
+  <div>
+    <%= f.label :rating, 'Rating (1-10)' %>
+    <%= f.select :rating, options_for_select((1..10).map { |i| [i, i] }, @rating.rating) %>
+  </div>
+
+  <div>
+    <%= f.label :review, 'Your Review' %>
+    <%= f.text_area :review, value: @rating.review %>
+  </div>
+
+  <div>
+    <%= f.submit 'Update Review' %>
+  </div>
+<% end %>
