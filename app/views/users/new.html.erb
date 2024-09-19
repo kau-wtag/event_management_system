@@ -1,9 +1,11 @@
-<h1>Sign Up</h1>
+<div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg text-center">
+  <h1 class="text-3xl font-bold mb-6">Sign Up</h1>
 
-<div>
-  <%= link_to 'Sign Up as User', signup_user_path, class: 'btn btn-primary' %> 
-</div>
+  <div class="mb-4">
+    <%= link_to 'Sign Up as User', signup_user_path, class: 'px-6 py-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' %>
+  </div>
 
-<div>
-  <%= link_to 'Sign Up as Organizer', signup_organizer_path, class: 'btn btn-secondary' %>
+  <div>
+    <%= link_to 'Sign Up as Organizer', signup_organizer_path, class: 'px-6 py-2 bg-gray-600 text-white rounded-full shadow-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500' %>
+  </div>
 </div>

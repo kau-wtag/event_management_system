@@ -1,3 +1,8 @@
-<h1><%= t('users.edit_account') %></h1>
+<div class="max-w-3xl mx-auto bg-white p-8">
 
-<%= render 'form', user: @user %>
+  <h1 class="text-3xl font-bold text-center mb-6"><%= t('users.edit_account') %></h1>
+
+  <!-- Render the form partial -->
+  <%= render 'form', user: @user %>
+
+</div>

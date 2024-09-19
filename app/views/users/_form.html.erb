@@ -1,57 +1,73 @@
-  <!-- Display the current avatar if it exists -->
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg flex items-start space-x-8">
+  
+  <!-- Display the current avatar if it exists on the left side -->
   <% if user.avatar.attached? %>
-    <div>
-      <strong><%= t('users.form.current_avatar') %>:</strong><br>
-      <%= image_tag user.avatar, size: "150x150" %>
-    </div>
+    <div class="w-40 flex-shrink-0">
+      <h3 class="text-xl font-bold text-gray-800 mb-4 text-center"><%= t('users.form.current_avatar') %></h3>
+      <div class="relative rounded-full overflow-hidden border-4 border-indigo-600 shadow-lg mx-auto">
+        <%= image_tag user.avatar, class: "object-cover w-40 h-40" %>
+      </div>
 
-    <!-- Button to delete the avatar -->
-    <div>
-      <%= button_to t('users.form.delete_avatar'), delete_avatar_user_path(user), method: :delete, data: { confirm: t('users.form.confirm_delete_avatar') } %>
-    </div>
-  <% end %>
-
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, t("errors.title")) %> <%= t("errors.prohibited", model: t("users.title")) %>:</h2>
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+      <!-- Button to delete the avatar -->
+      <div class="flex justify-center mt-4">
+        <%= button_to t('users.form.delete_avatar'), delete_avatar_user_path(user), method: :delete, data: { confirm: t('users.form.confirm_delete_avatar') }, class: "px-4 py-2 bg-red-600 text-white rounded-full shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" %>
+      </div>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, t('users.form.name'), style: "display: block" %>
-    <%= form.text_field :name %>
+  <!-- Form fields on the right side -->
+  <div class="flex-grow space-y-6">
+    <%= form_with(model: user, local: true, class: "space-y-6") do |form| %>
+
+      <!-- Display errors -->
+      <% if user.errors.any? %>
+        <div class="bg-red-100 text-red-600 p-4 rounded-lg shadow-sm mb-4">
+          <h2 class="font-semibold"><%= pluralize(user.errors.count, t("errors.title")) %> <%= t("errors.prohibited", model: t("users.title")) %>:</h2>
+          <ul class="mt-2 space-y-1">
+            <% user.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <!-- Name Field -->
+      <div>
+        <%= form.label :name, t('users.form.name'), class: "block text-gray-700 font-semibold mb-2" %>
+        <%= form.text_field :name, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+      </div>
+
+      <!-- Email Field (Read-only) -->
+      <div>
+        <%= form.label :email, t('users.form.email'), class: "block text-gray-700 font-semibold mb-2" %>
+        <%= form.email_field :email, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-100 cursor-not-allowed", readonly: true %>
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <%= form.label :password, t('users.form.password'), class: "block text-gray-700 font-semibold mb-2" %>
+        <%= form.password_field :password, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+      </div>
+
+      <!-- Password Confirmation Field -->
+      <div>
+        <%= form.label :password_confirmation, t('users.form.password_confirmation'), class: "block text-gray-700 font-semibold mb-2" %>
+        <%= form.password_field :password_confirmation, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+      </div>
+
+      <!-- Avatar Upload if no avatar exists -->
+      <% unless user.avatar.attached? %>
+        <div>
+          <%= form.label :avatar, t('users.form.avatar'), class: "block text-gray-700 font-semibold mb-2" %>
+          <%= form.file_field :avatar, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+      <% end %>
+
+      <!-- Submit Button -->
+      <div class="flex justify-center">
+        <%= form.submit user.new_record? ? t('users.form.create_account') : t('users.form.update_account'), class: "px-6 py-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+      </div>
+    <% end %>
   </div>
 
-  <div>
-    <%= form.label :email, t('users.form.email'), style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div>
-    <%= form.label :password, t('users.form.password'), style: "display: block" %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div>
-    <%= form.label :password_confirmation, t('users.form.password_confirmation'), style: "display: block" %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-
-  <% if !user.avatar.attached? %>
-    <div>
-      <%= form.label :avatar, t('users.form.avatar') %>
-      <%= form.file_field :avatar %>
-  </div>
-  <%end%>
-
-  <div>
-    <%= form.submit user.new_record? ? t('users.form.create_account') : t('users.form.update_account') %>
-  </div>
-<% end %>
+</div>

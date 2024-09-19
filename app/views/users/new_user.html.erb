@@ -1,28 +1,47 @@
-<h1>User Sign-Up</h1>
+<div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6">User Sign-Up</h1>
 
-<%= form_with(model: @user, url: signup_user_path) do |form| %>
-  <% if @user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-      <ul>
-        <% @user.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+  <%= form_with(model: @user, url: signup_user_path, local: true, class: "space-y-6") do |form| %>
+
+    <!-- Display errors if any -->
+    <% if @user.errors.any? %>
+      <div class="bg-red-100 text-red-600 p-4 rounded-lg shadow-sm mb-4">
+        <h2 class="font-semibold"><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul class="mt-2 space-y-1">
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Name Field -->
+    <div>
+      <%= form.label :name, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.text_field :name, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
+
+    <!-- Email Field -->
+    <div>
+      <%= form.label :email, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.email_field :email, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
+
+    <!-- Password Field -->
+    <div>
+      <%= form.label :password, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.password_field :password, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
+
+    <!-- Password Confirmation Field -->
+    <div>
+      <%= form.label :password_confirmation, class: "block text-gray-700 font-semibold mb-2" %>
+      <%= form.password_field :password_confirmation, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-center">
+      <%= form.submit "Sign Up as User", class: "px-6 py-2 bg-indigo-600 text-white rounded-full shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
     </div>
   <% end %>
-
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-
-  <%= form.label :email %>
-  <%= form.text_field :email %>
-
-  <%= form.label :password %>
-  <%= form.password_field :password %>
-
-  <%= form.label :password_confirmation %>
-  <%= form.password_field :password_confirmation %>
-
-  <%= form.submit "Sign Up as User" %>
-<% end %>
+</div>
