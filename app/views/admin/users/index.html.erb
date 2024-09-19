@@ -1,23 +1,42 @@
-<h1><%= t('admin.users.index_title') %></h1>
+<h1 class="text-2xl font-bold mb-6"><%= t('admin.users.index_title') %></h1>
 
-<table>
+<table class="min-w-full bg-white shadow-md rounded-lg">
   <thead>
-    <tr>
-      <th><%= t('admin.users.user_details.name') %></th>
-      <th><%= t('admin.users.user_details.email') %></th>
-      <th><%= t('admin.users.user_details.admin') %></th>
-      <th><%= t('admin.users.actions.actions') %></th>
+    <tr class="bg-gray-100 border-b">
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.users.user_details.avatar') %></th> <!-- Avatar Column -->
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.users.user_details.name') %></th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.users.user_details.email') %></th>
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.users.user_details.role') %></th> <!-- Updated to Role -->
+      <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.users.actions.actions') %></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.admin? ? t('admin.users.yes') : t('admin.users.no') %></td>
-        <td>
-          <%= link_to t('admin.users.actions.show'), admin_user_path(user) %> |
-          <%= link_to t('admin.users.actions.delete'), admin_user_path(user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') } %>
+      <tr class="border-b hover:bg-gray-50">
+        <!-- Avatar Column -->
+        <td class="px-4 py-2 text-sm text-gray-700">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.avatar, class: "rounded-full h-10 w-10 object-cover" %>
+          <% else %>
+            <div class="rounded-full bg-gray-300 h-10 w-10"></div> <!-- Placeholder for missing avatar -->
+          <% end %>
+        </td>
+        
+        <!-- Name Column -->
+        <td class="px-4 py-2 text-sm text-gray-700"><%= user.name %></td>
+        
+        <!-- Email Column -->
+        <td class="px-4 py-2 text-sm text-gray-700"><%= user.email %></td>
+        
+        <!-- Role Column -->
+        <td class="px-4 py-2 text-sm text-gray-700">
+          <%= user.admin? ? t('admin.users.roles.admin') : t('admin.users.roles.user') %>
+        </td>
+        
+        <!-- Actions Column -->
+        <td class="px-4 py-2 text-sm text-gray-700">
+          <%= link_to t('admin.users.actions.show'), admin_user_path(user), class: 'text-indigo-600 hover:underline' %> |
+          <%= link_to t('admin.users.actions.delete'), admin_user_path(user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'text-red-600 hover:underline' %>
         </td>
       </tr>
     <% end %>

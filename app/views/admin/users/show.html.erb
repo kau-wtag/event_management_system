@@ -1,9 +1,28 @@
-<h1><%= t('admin.users.show_title') %></h1>
+<h1 class="text-2xl font-bold mb-6"><%= t('admin.users.show_title') %></h1>
 
-<p><strong><%= t('admin.users.user_details.name') %>:</strong> <%= @user.name %></p>
-<p><strong><%= t('admin.users.user_details.email') %>:</strong> <%= @user.email %></p>
-<p><strong><%= t('admin.users.user_details.admin') %>:</strong> <%= @user.admin? ? t('admin.users.yes') : t('admin.users.no') %></p>
-<p><strong><%= t('admin.users.user_details.joined') %>:</strong> <%= @user.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <!-- Avatar Section -->
+  <div class="flex items-center space-x-4 mb-6">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, class: "rounded-full h-24 w-24 object-cover" %>
+    <% else %>
+      <div class="rounded-full bg-gray-300 h-24 w-24"></div>
+    <% end %>
+    <div>
+      <p class="text-lg font-semibold"><%= @user.name %></p>
+      <p class="text-gray-500"><%= @user.email %></p>
+    </div>
+  </div>
 
-<%= link_to t('admin.users.back_to_users'), admin_users_path, class: 'btn btn-primary' %> |
-<%= link_to t('admin.users.actions.delete'), admin_user_path(@user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'btn btn-danger' %>
+  <!-- User Details -->
+  <p class="mb-4"><strong><%= t('admin.users.user_details.role') %>:</strong> 
+    <%= @user.admin? ? t('admin.users.roles.admin') : t('admin.users.roles.user') %>
+  </p>
+  <p class="mb-4"><strong><%= t('admin.users.user_details.joined') %>:</strong> <%= @user.created_at.strftime("%b %d, %Y %I:%M %p") %></p>
+
+  <!-- Action Buttons -->
+  <div class="flex space-x-4 mt-6">
+    <%= link_to t('admin.users.back_to_users'), admin_users_path, class: 'px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700' %>
+    <%= link_to t('admin.users.actions.delete'), admin_user_path(@user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700' %>
+  </div>
+</div>
