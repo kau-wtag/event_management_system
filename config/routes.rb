@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get 'dashboard/index'
       resources :events, only:[:index, :show]
       resources :users, only: [:index, :show, :destroy]
-      resources :categories
+      resources :categories, only: [:new, :index, :edit, :create, :destroy]
     end
 
     # Organizer namespace for organizer-specific routes

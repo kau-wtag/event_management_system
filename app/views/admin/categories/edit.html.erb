@@ -1,5 +1,9 @@
-<h1><%= @category.new_record? ? t('admin.categories.new_category') : t('admin.categories.edit_category') %></h1>
+<h1 class="text-2xl font-bold mb-6">
+  <%= @category.new_record? ? t('admin.categories.new_category') : t('admin.categories.edit_category') %>
+</h1>
 
+<!-- Render the form partial -->
 <%= render 'form', category: @category %>
 
-<%= link_to t('admin.categories.back_to_categories'), admin_categories_path, class: 'btn btn-secondary' %>
+<!-- Back to Categories Link -->
+<%= link_to t('admin.categories.back_to_categories'), admin_categories_path, class: 'inline-block bg-gray-600 text-white mt-2 px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200' %>
