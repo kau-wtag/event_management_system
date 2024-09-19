@@ -1,229 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%= t('admin.dashboard.title') %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f4f8;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 40px;
-      color: #2d3748;
-    }
-
-    .section {
-      border: 2px solid #4a5568;
-      padding: 20px;
-      margin-bottom: 40px;
-      border-radius: 10px;
-      background-color: #f7fafc;
-    }
-
-    .section h2 {
-      color: #2d3748;
-      margin-bottom: 20px;
-    }
-
-    .section h3 {
-      margin-top: 0;
-      color: #2d3748;
-    }
-
-    .section p,
-    .section ul {
-      margin-bottom: 20px;
-      color: #4a5568;
-    }
-
-    .section ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    .section ul li {
-      margin-bottom: 10px;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      padding: 10px 20px;
-      color: white;
-      background-color: #3182ce;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background-color: #2b6cb0;
-    }
-
-    .sold-out {
-      color: #e53e3e;
-      font-weight: bold;
-    }
-
-    .no-data {
-      color: #718096;
-      font-style: italic;
-    }
-  </style>
-</head>
-<body>
-
-  <h1><%= t('admin.dashboard.title') %></h1>
+<!-- Admin Dashboard Container -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
   <!-- Overview Section -->
-  <div class="section">
-    <h2><%= t('admin.dashboard.overview.title') %></h2>
-    <p><%= t('admin.dashboard.overview.total_users') %>: <strong><%= @users_count %></strong></p>
-    <p><%= t('admin.dashboard.overview.total_events') %>: <strong><%= @events_count %></strong></p>
-    <p><%= t('admin.dashboard.overview.total_registrations') %>: <strong><%= @registrations_count %></strong></p>
-  </div>
-
-  <!-- Recent Activity Section -->
-  <div class="section">
-    <h2><%= t('admin.dashboard.recent_activity.title') %></h2>
-
-    <div>
-      <h3><%= t('admin.dashboard.recent_activity.recent_users') %></h3>
-      <ul>
-        <% if @recent_users.any? %>
-          <% @recent_users.each do |user| %>
-            <li><%= user.name %> - <%= user.created_at.strftime("%b %d, %Y") %></li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div>
-      <h3><%= t('admin.dashboard.recent_activity.recent_events') %></h3>
-      <ul>
-        <% if @recent_events.any? %>
-          <% @recent_events.each do |event| %>
-            <li><%= link_to event.name, admin_event_path(event) %> - <%= event.created_at.strftime("%b %d, %Y") %></li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div>
-      <h3><%= t('admin.dashboard.recent_activity.recent_registrations') %></h3>
-      <ul>
-        <% if @recent_registrations.any? %>
-          <% @recent_registrations.each do |registration| %>
-            <li><%= link_to registration.user.name, admin_user_path(registration.user) %> registered for <%= link_to registration.event.name, admin_event_path(registration.event) %> on <%= registration.created_at.strftime("%b %d, %Y") %></li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
+  <div class="bg-white p-6 rounded-lg shadow-md col-span-1 lg:col-span-2">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6"><%= t('admin.dashboard.title') %></h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+        <h2 class="text-lg font-semibold text-gray-700 mb-2"><%= t('admin.dashboard.overview.total_users') %></h2>
+        <p class="text-2xl font-bold text-indigo-600"><%= @users_count %></p>
+      </div>
+      <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+        <h2 class="text-lg font-semibold text-gray-700 mb-2"><%= t('admin.dashboard.overview.total_events') %></h2>
+        <p class="text-2xl font-bold text-indigo-600"><%= @events_count %></p>
+      </div>
+      <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+        <h2 class="text-lg font-semibold text-gray-700 mb-2"><%= t('admin.dashboard.overview.total_registrations') %></h2>
+        <p class="text-2xl font-bold text-indigo-600"><%= @registrations_count %></p>
+      </div>
     </div>
   </div>
 
   <!-- Event Management Section -->
-  <div class="section">
-    <h2><%= t('admin.dashboard.event_management.title') %></h2>
+  <div class="bg-white p-6 rounded-lg shadow-md col-span-1">
+    <h2 class="text-xl font-semibold text-gray-700 mb-4"><%= t('admin.dashboard.event_management.title') %></h2>
 
-    <div>
-      <h3><%= t('admin.dashboard.event_management.upcoming_events') %></h3>
-      <ul>
+    <!-- Upcoming Events -->
+    <div class="mb-6">
+      <h3 class="text-lg font-semibold text-gray-700 mb-2"><%= t('admin.dashboard.event_management.upcoming_events') %></h3>
+      <ul class="list-none space-y-2">
         <% if @upcoming_events.any? %>
           <% @upcoming_events.each do |event| %>
-            <li>
-              <%= link_to event.name, admin_event_path(event) %> - <%= event.starts_at.strftime("%b %d, %Y") %>
+            <li class="text-gray-600">
+              <%= link_to event.name, admin_event_path(event), class: 'text-indigo-600 hover:underline' %> - <%= event.starts_at.strftime("%b %d, %Y") %>
               <% if event.sold_out? %>
-                <span class="sold-out"><%= t('admin.dashboard.event_management.sold_out') %></span>
+                <span class="text-red-600 font-bold"><%= t('admin.dashboard.event_management.sold_out') %></span>
               <% else %>
                 (<%= t('admin.dashboard.event_management.available_spots') %>: <%= event.capacity - event.registrations.size %>)
               <% end %>
             </li>
           <% end %>
         <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div>
-      <h3><%= t('admin.dashboard.event_management.sold_out_events') %></h3>
-      <ul>
-        <% if @sold_out_events.any? %>
-          <% @sold_out_events.each do |event| %>
-            <li><%= link_to event.name, admin_event_path(event) %> - <%= event.starts_at.strftime("%b %d, %Y") %></li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div>
-      <h3><%= t('admin.dashboard.event_management.low_registration_events') %></h3>
-      <ul>
-        <% if @low_registration_events.any? %>
-          <% @low_registration_events.each do |event| %>
-            <li>
-              <%= link_to event.name, admin_event_path(event) %> - <%= event.starts_at.strftime("%b %d, %Y") %>
-              (Registrations: <%= event.registrations.size %>)
-            </li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
+          <li class="text-gray-500 italic"><%= t('admin.dashboard.recent_activity.no_data') %></li>
         <% end %>
       </ul>
     </div>
   </div>
 
-  <!-- User Management Section -->
-  <div class="section">
-    <h2><%= t('admin.dashboard.user_management.title') %></h2>
-
-    <div>
-      <h3><%= t('admin.dashboard.user_management.inactive_users') %></h3>
-      <ul>
-        <% if @inactive_users.any? %>
-          <% @inactive_users.each do |user| %>
-            <li><%= link_to user.name, admin_user_path(user) %> - <%= t('admin.dashboard.user_management.last_registration') %>: <%= user.registrations.order(:created_at).last&.created_at&.strftime("%b %d, %Y") || t('admin.dashboard.user_management.never_registered') %></li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
+  <!-- Sold Out Events Section -->
+  <div class="bg-white p-6 rounded-lg shadow-md col-span-1">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4"><%= t('admin.dashboard.event_management.sold_out_events') %></h3>
+    <ul class="list-none space-y-2">
+      <% if @sold_out_events.any? %>
+        <% @sold_out_events.each do |event| %>
+          <li class="text-gray-600">
+            <%= link_to event.name, admin_event_path(event), class: 'text-indigo-600 hover:underline' %> - <%= event.starts_at.strftime("%b %d, %Y") %>
+          </li>
         <% end %>
-      </ul>
-    </div>
-
-    <div>
-      <h3><%= t('admin.dashboard.user_management.top_participants') %></h3>
-      <ul>
-        <% if @top_participants.any? %>
-          <% @top_participants.each do |user| %>
-            <li><%= link_to user.name, admin_user_path(user) %> - <%= pluralize(user.registrations.count, t('admin.dashboard.user_management.event_registered')) %> registered</li>
-          <% end %>
-        <% else %>
-          <li class="no-data"><%= t('admin.dashboard.recent_activity.no_data') %></li>
-        <% end %>
-      </ul>
-    </div>
+      <% else %>
+        <li class="text-gray-500 italic"><%= t('admin.dashboard.recent_activity.no_data') %></li>
+      <% end %>
+    </ul>
   </div>
 
-  <!-- Quick Actions Section -->
-  <div class="section">
-    <h2><%= t('admin.dashboard.quick_actions.title') %></h2>
-    <%= link_to t('admin.dashboard.quick_actions.create_new_event'), new_admin_event_path, class: 'btn-primary' %>
+  <!-- Low Registration Events Section -->
+  <div class="bg-white p-6 rounded-lg shadow-md col-span-1 lg:col-span-2">
+    <h3 class="text-xl font-semibold text-gray-700 mb-4"><%= t('admin.dashboard.event_management.low_registration_events') %></h3>
+    <ul class="list-none space-y-2">
+      <% if @low_registration_events.any? %>
+        <% @low_registration_events.each do |event| %>
+          <li class="text-gray-600">
+            <%= link_to event.name, admin_event_path(event), class: 'text-indigo-600 hover:underline' %> - <%= event.starts_at.strftime("%b %d, %Y") %>
+            (Registrations: <%= event.registrations.size %>)
+          </li>
+        <% end %>
+      <% else %>
+        <li class="text-gray-500 italic"><%= t('admin.dashboard.recent_activity.no_data') %></li>
+      <% end %>
+    </ul>
   </div>
 
-</body>
-</html>
+</div>
