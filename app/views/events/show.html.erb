@@ -23,12 +23,12 @@
         <!-- Follow/Unfollow Organizer -->
         <% if current_user %>
           <% if current_user.following.include?(@event.organizer) %>
-            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :delete, class: "text-indigo-600 hover:bg-indigo-100  flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
               <i class="fas fa-user-minus"></i>
               <span class="ml-1"><%= t('events.unfollow') %></span>
             <% end %>
           <% else %>
-            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+            <%= button_to event_follow_path(@event, organizer_id: @event.organizer.id), method: :post, class: "text-indigo-600 hover:bg-indigo-100  flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
               <i class="fas fa-user-plus"></i>
               <span class="ml-1"><%= t('events.follow') %></span>
             <% end %>
@@ -42,12 +42,12 @@
       <!-- Like Button -->
       <div class="flex items-center">
         <% if @event.likes.find_by(user: current_user) %>
-          <%= button_to event_like_path(@event), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+          <%= button_to event_like_path(@event), method: :delete, class: "text-indigo-600 hover:bg-indigo-100 flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
             <i class="fas fa-thumbs-up"></i>
             <span class="ml-1"><%= t('events.like') %> | <%= @event.likes.count %></span>
           <% end %>
         <% else %>
-          <%= button_to event_like_path(@event), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+          <%= button_to event_like_path(@event), method: :post, class: "text-indigo-600 hover:bg-indigo-100 flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
             <i class="far fa-thumbs-up"></i>
             <span class="ml-1"><%= t('events.like') %> | <%= @event.likes.count %></span>
           <% end %>
@@ -57,12 +57,12 @@
       <!-- Favorite Button -->
       <div class="flex items-center">
         <% if @event.favorites.find_by(user: current_user) %>
-          <%= button_to event_favorite_path(@event), method: :delete, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+          <%= button_to event_favorite_path(@event), method: :delete, class: "text-indigo-600 hover:bg-indigo-100 flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
             <i class="fas fa-heart"></i>
             <span class="ml-1"><%= t('events.favorited') %> | <%= @event.favorites.count %></span>
           <% end %>
         <% else %>
-          <%= button_to event_favorite_path(@event), method: :post, class: "text-indigo-600 hover:underline flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
+          <%= button_to event_favorite_path(@event), method: :post, class: "text-indigo-600 hover:bg-indigo-100 flex items-center border border-indigo-600 px-3 py-1 rounded-md" do %>
             <i class="far fa-heart"></i>
             <span class="ml-1"><%= t('events.favorite') %> | <%= @event.favorites.count %></span>
           <% end %>
@@ -94,11 +94,13 @@
 
   <!-- Comment Form -->
   <% if current_user %>
-    <div class="mb-6">
+    <div class="mb-6 bg-white p-4 rounded-lg shadow-md">
       <%= form_with(model: [@event, @event.comments.build], local: true) do |form| %>
-        <div>
-          <%= form.text_area :body, placeholder: t('events.add_comment'), class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
-          <%= form.submit t('events.post_comment'), class: "mt-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700" %>
+        <div class="mb-4">
+          <%= form.text_area :body, placeholder: t('events.add_comment'), class: "w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
+        </div>
+        <div class="flex justify-end">
+          <%= form.submit t('events.post_comment'), class: "px-5 py-2 bg-indigo-600 text-white rounded-md shadow hover:bg-indigo-700 transition duration-150 ease-in-out cursor-pointer" %>
         </div>
       <% end %>
     </div>
@@ -106,22 +108,28 @@
     <p><%= link_to t('events.sign_in_to_comment'), new_session_path, class: "text-indigo-600 hover:underline" %></p>
   <% end %>
 
+
   <!-- Display Comments -->
-  <div class="mb-6">
-    <h2 class="text-2xl font-semibold mb-4"><%= t('events.comments') %></h2>
-    <ul class="space-y-4">
+  <% if @event.comments.size %>
+  <div class="mb-6 bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-6 border-b pb-2 text-gray-700"><%= t('events.comments') %></h2>
+    <ul class="space-y-6">
       <% @event.comments.each do |comment| %>
-        <li class="bg-gray-100 p-4 rounded-md">
+        <li class="bg-gray-50 p-5 rounded-md shadow-sm flex flex-col md:flex-row md:items-center md:justify-between">
           <strong><%= comment.user ? comment.user.name : "Anonymous" %>:</strong>
           <p class="mt-2"><%= comment.body %></p>
           <!-- Allow user to delete their own comments -->
           <% if comment.user == current_user && comment.persisted? %>
-            <%= button_to t('events.delete_comment'), event_comment_path(@event, comment), method: :delete, class: "mt-2 text-red-500 hover:underline", data: { confirm: t('events.confirm_delete_comment') } %>
+            <div class="mt-4 md:mt-0 md:ml-4 flex-shrink-0">
+              <%= button_to t('events.delete_comment'), event_comment_path(@event, comment), method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-150 ease-in-out text-sm", data: { confirm: t('events.confirm_delete_comment') } %>
+            </div>
           <% end %>
         </li>
       <% end %>
     </ul>
   </div>
+  <% end %>
+
 
   <!-- Rate this Event -->
   <h2 class="text-2xl font-semibold mb-4">Rate this Event</h2>

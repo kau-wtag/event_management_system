@@ -1,5 +1,10 @@
-<h1><%= t('registrations.new.title', event_name: @event.name) %></h1>
+<h1 class="text-3xl font-bold mb-6"><%= t('registrations.new.title', event_name: @event.name) %></h1>
 
-<%= form_with(model: [@event, @registration]) do |f| %>
-  <%= f.submit t('registrations.form.submit') %>
+<%= form_with(model: [@event, @registration], local: true, class: "bg-white") do |f| %>
+
+  <!-- Submit Button -->
+  <div class="flex justify-start">
+    <%= f.submit t('registrations.form.submit'), class: "px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 cursor-pointer text-lg" %>
+  </div>
+
 <% end %>
