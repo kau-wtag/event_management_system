@@ -137,8 +137,15 @@
     <% rating = current_user.ratings.find_by(event_id: @event.id) %>
     <p class="mb-2">You rated this event: <%= rating.rating %> / 10</p>
     <p class="mb-2">Review: <%= rating.review %></p>
-    <%= link_to 'Edit Review', edit_event_rating_path(@event, rating), class: "text-indigo-600 hover:underline" %> |
-    <%= link_to 'Delete Review', event_rating_path(@event, rating), method: :delete, data: { confirm: 'Are you sure?' }, class: "text-red-600 hover:underline" %>
+    
+    <div class="flex space-x-4">
+      <!-- Edit Button -->
+      <%= link_to 'Edit Review', edit_event_rating_path(@event, rating), class: "px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-150 ease-in-out text-sm" %>
+
+      <!-- Delete Button -->
+      <%= button_to 'Delete Review', event_rating_path(@event, rating), method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-150 ease-in-out text-sm", data: { confirm: 'Are you sure?' } %>
+    </div>
+
   <% else %>
     <%= link_to 'Leave a Review', new_event_rating_path(@event), class: "text-indigo-600 hover:underline" %>
   <% end %>
