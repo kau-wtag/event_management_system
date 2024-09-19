@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     # Admin namespace for admin-specific routes
     namespace :admin do
       get 'dashboard/index'
-      resources :events
+      resources :events, only:[:index, :show]
       resources :users, only: [:index, :show, :destroy]
       resources :categories
     end

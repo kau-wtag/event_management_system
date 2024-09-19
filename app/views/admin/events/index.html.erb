@@ -1,42 +1,36 @@
-<h1><%= t('admin.events.index_title') %></h1>
-
-<%= link_to t('admin.events.new_event'), new_admin_event_path, class: 'btn btn-primary' %>
+<h1 class="text-2xl font-bold mb-6"><%= t('admin.events.index_title') %></h1>
 
 <% if @events.any? %>
-  <table>
+  <table class="min-w-full bg-white shadow-md rounded-lg">
     <thead>
-      <tr>
-        <th><%= t('admin.events.form.image') %></th>
-        <th><%= t('admin.events.form.name') %></th>
-        <th><%= t('admin.events.form.location') %></th>
-        <th><%= t('admin.events.form.starts_at') %></th>
-        <th><%= t('admin.events.form.price') %></th>
-        <th><%= t('actions.edit') %></th>
-        <th><%= t('actions.delete') %></th>
+      <tr class="bg-gray-100 border-b">
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.events.form.image') %></th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.events.form.name') %></th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.events.form.location') %></th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.events.form.starts_at') %></th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700"><%= t('admin.events.form.registrations') %></th> <!-- Registration Count -->
       </tr>
     </thead>
     <tbody>
       <% @events.each do |event| %>
-        <tr>
-          <td>
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-4 py-2">
             <% if event.image.attached? %>
-              <%= image_tag url_for(event.image), alt: event.name, width: 50, height: 50 %>
+              <%= image_tag rails_blob_path(event.image, disposition: "attachment", only_path: true), class: "w-12 h-12 object-cover rounded" %>
             <% else %>
-              <p><%= t('admin.events.no_image') %></p>
+              <div class="w-12 h-12 bg-gray-200 rounded"></div> <!-- Placeholder for missing image -->
             <% end %>
           </td>
-          <td><%= event.name %></td>
-          <td><%= event.location %></td>
-          <td><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
-          <td><%= number_to_currency(event.price) %></td>
-          <td><%= link_to t('actions.edit'), edit_admin_event_path(event) %></td>
-          <td>
-            <%= link_to t('actions.delete'), admin_event_path(event), data: { turbo_method: :delete, turbo_confirm: t('alerts.confirm_delete') } %>
+          <td class="px-4 py-2 text-sm text-gray-700">
+            <%= link_to event.name, admin_event_path(event), class: 'text-indigo-600 hover:underline' %>
           </td>
+          <td class="px-4 py-2 text-sm text-gray-700"><%= event.location %></td>
+          <td class="px-4 py-2 text-sm text-gray-700"><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
+          <td class="px-4 py-2 text-sm text-gray-700"><%= event.registrations.count %></td> <!-- Registration Count -->
         </tr>
       <% end %>
     </tbody>
   </table>
 <% else %>
-  <p><%= t('admin.events.no_events') %></p>
+  <p class="text-sm text-gray-700"><%= t('admin.events.no_events') %></p>
 <% end %>

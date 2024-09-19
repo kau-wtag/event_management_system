@@ -1,14 +1,14 @@
-<h1><%= @event.name %></h1>
+<h1 class="text-2xl font-bold mb-6"><%= @event.name %></h1>
 
 <% if @event.image.attached? %>
   <div>
-    <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px; height: auto;" %>
+    <%= image_tag url_for(@event.image), alt: @event.name, class: "w-full max-w-sm h-auto rounded-lg shadow-md" %>
   </div>
 <% else %>
-  <p><%= t('admin.events.no_image') %></p>
+  <p class="text-sm text-gray-700"><%= t('admin.events.no_image') %></p>
 <% end %>
 
-<p><strong><%= t('admin.events.event_details.description') %>:</strong> <%= @event.description %></p>
+<p class="mt-4"><strong><%= t('admin.events.event_details.description') %>:</strong> <%= @event.description %></p>
 <p><strong><%= t('admin.events.event_details.location') %>:</strong> <%= @event.location %></p>
 <p><strong><%= t('admin.events.event_details.price') %>:</strong> <%= number_to_currency(@event.price) %></p>
 <p><strong><%= t('admin.events.event_details.capacity') %>:</strong> <%= @event.capacity %></p>
@@ -18,5 +18,10 @@
   <%= @event.category ? @event.category.name : t('admin.events.messages.no_category') %>
 </p>
 
-<%= link_to t('actions.edit'), edit_admin_event_path(@event), class: 'btn btn-secondary' %> |
-<%= link_to t('admin.events.index_title'), admin_events_path, class: 'btn btn-primary' %>
+<!-- Displaying the number of registrations for this event -->
+<p><strong><%= t('admin.events.event_details.registrations_count') %>:</strong> <%= @event.registrations.count %></p>
+
+<!-- Navigation Links -->
+<div class="mt-6">
+  <%= link_to t('admin.events.index_title'), admin_events_path, class: 'px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition' %>
+</div>
