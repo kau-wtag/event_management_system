@@ -35,8 +35,7 @@
         
         <!-- Actions Column -->
         <td class="px-4 py-2 text-sm text-gray-700">
-          <%= link_to t('admin.users.actions.show'), admin_user_path(user), class: 'text-indigo-600 hover:underline' %> |
-          <%= link_to t('admin.users.actions.delete'), admin_user_path(user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'text-red-600 hover:underline' %>
+          <%= link_to t('admin.users.actions.show'), admin_user_path(user), class: 'text-indigo-600 hover:underline' %>
         </td>
       </tr>
     <% end %>

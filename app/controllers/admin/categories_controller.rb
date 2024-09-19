@@ -54,13 +54,5 @@ module Admin
     def category_params
       params.require(:category).permit(:name, :description)
     end
-
-    def require_admin
-      redirect_to root_path, alert: t('admin.shared.access_denied') unless current_user&.admin?
-    end
-
-    def require_signin
-      redirect_to new_session_path, alert: t('admin.shared.please_sign_in') unless current_user
-    end
   end
 end

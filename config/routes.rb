@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     namespace :admin do
       get 'dashboard/index'
       resources :events, only:[:index, :show]
-      resources :users, only: [:index, :show, :destroy]
+      resources :users, only: [:index, :show]
       resources :categories, only: [:new, :index, :edit, :create, :destroy]
+      resource :locations
     end
 
     # Organizer namespace for organizer-specific routes
