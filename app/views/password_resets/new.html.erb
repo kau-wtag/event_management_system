@@ -1,12 +1,17 @@
-<h1><%= t('password_resets.new.title') %></h1>
+<h1 class="text-3xl font-bold mb-6"><%= t('password_resets.new.title') %></h1>
 
-<%= form_with url: password_resets_path, method: :post do %>
+<!-- Password Reset Request Form -->
+<%= form_with url: password_resets_path, method: :post, local: true, class: "space-y-4" do %>
+  
+  <!-- Email Field -->
   <div class="field">
-    <%= label_tag :email, t('password_resets.form.email') %>
-    <%= email_field_tag :email, params[:email] %>
+    <%= label_tag :email, t('password_resets.form.email'), class: "block text-gray-700 font-semibold mb-2" %>
+    <%= email_field_tag :email, params[:email], class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
   </div>
 
+  <!-- Submit Button -->
   <div class="actions">
-    <%= submit_tag t('password_resets.form.reset_password') %>
+    <%= submit_tag t('password_resets.form.reset_password'), class: "px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
+
 <% end %>

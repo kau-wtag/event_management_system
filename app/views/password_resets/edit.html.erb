@@ -1,9 +1,10 @@
-<h1><%= t('password_resets.edit.title') %></h1>
+<h1 class="text-3xl font-bold mb-6"><%= t('password_resets.edit.title') %></h1>
 
+<!-- Display errors if any -->
 <% if @user.errors.any? %>
-  <div class="error_explanation">
-    <h2><%= pluralize(@user.errors.count, t('errors.prohibited_user_save')) %></h2>
-    <ul>
+  <div class="bg-red-100 text-red-600 p-4 rounded-lg mb-4">
+    <h2 class="font-semibold"><%= pluralize(@user.errors.count, t('errors.prohibited_user_save')) %></h2>
+    <ul class="mt-2 space-y-1">
       <% @user.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -11,18 +12,22 @@
   </div>
 <% end %>
 
-<%= form_with url: password_reset_path(@token), method: :patch do %>
+<!-- Password Reset Form -->
+<%= form_with url: password_reset_path(@token), method: :patch, local: true, class: "space-y-4" do %>
+  <!-- Password Field -->
   <div class="field">
-    <%= label_tag :password, t('password_resets.form.password') %>
-    <%= password_field_tag 'user[password]' %>
+    <%= label_tag :password, t('password_resets.form.password'), class: "block text-gray-700 font-semibold mb-2" %>
+    <%= password_field_tag 'user[password]', nil, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
   </div>
 
+  <!-- Password Confirmation Field -->
   <div class="field">
-    <%= label_tag :password_confirmation, t('password_resets.form.password_confirmation') %>
-    <%= password_field_tag 'user[password_confirmation]' %>
+    <%= label_tag :password_confirmation, t('password_resets.form.password_confirmation'), class: "block text-gray-700 font-semibold mb-2" %>
+    <%= password_field_tag 'user[password_confirmation]', nil, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" %>
   </div>
 
+  <!-- Submit Button -->
   <div class="actions">
-    <%= submit_tag t('password_resets.form.update_password') %>
+    <%= submit_tag t('password_resets.form.update_password'), class: "px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
 <% end %>
