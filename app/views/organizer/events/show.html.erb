@@ -1,20 +1,29 @@
-<h1><%= @event.name %></h1>
+<div class="max-w-4xl mx-auto p-6 bg-white">
+  <h1 class="text-3xl font-bold text-indigo-700 mb-4"><%= @event.name %></h1>
 
-<% if @event.image.attached? %>
-  <div>
-    <%= image_tag url_for(@event.image), alt: @event.name, style: "max-width: 300px;" %>
+  <!-- Event Image -->
+  <% if @event.image.attached? %>
+    <div class="mb-6">
+      <%= image_tag url_for(@event.image), alt: @event.name, class: "w-full max-w-md rounded-lg shadow-lg" %>
+    </div>
+  <% end %>
+
+  <!-- Event Details -->
+  <div class="space-y-4">
+    <p><strong>Description:</strong> <%= @event.description %></p>
+    <p><strong>Location:</strong> <%= @event.location %></p>
+    <p><strong>Price:</strong> <%= number_to_currency(@event.price) %></p>
+    <p><strong>Capacity:</strong> <%= @event.capacity %></p>
+    <p><strong>Event Start Date:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
+
+    <p><strong>Registration Start Date:</strong> <%= @event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_start_date.present? %></p>
+    <p><strong>Registration End Date:</strong> <%= @event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_end_date.present? %></p>
   </div>
-<% end %>
 
-<p><strong>Description:</strong> <%= @event.description %></p>
-<p><strong>Location:</strong> <%= @event.location %></p>
-<p><strong>Price:</strong> <%= number_to_currency(@event.price) %></p>
-<p><strong>Capacity:</strong> <%= @event.capacity %></p>
-<p><strong>Event Start Date:</strong> <%= @event.starts_at.strftime("%b %d, %Y %I:%M %p") %></p>
-
-<p><strong>Registration Start Date:</strong> <%= @event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_start_date.present? %></p>
-<p><strong>Registration End Date:</strong> <%= @event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if @event.registration_end_date.present? %></p>
-
-<%= link_to 'Edit Event', edit_organizer_event_path(@event), class: 'btn btn-secondary' %> |
-<%= link_to t('actions.delete'), organizer_event_path(@event), data: { turbo_method: :delete, turbo_confirm: t('alerts.confirm_delete') } %> |
-<%= link_to 'Back to My Events', organizer_events_path, class: 'btn btn-primary' %>
+  <!-- Action Buttons -->
+  <div class="mt-6 flex space-x-4">
+    <%= link_to 'Edit Event', edit_organizer_event_path(@event), class: 'bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition duration-200' %>
+    <%= link_to t('actions.delete'), organizer_event_path(@event), data: { turbo_method: :delete, turbo_confirm: t('alerts.confirm_delete') }, class: 'bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-200' %>
+    <%= link_to 'Back to My Events', organizer_events_path, class: 'bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200' %>
+  </div>
+</div>

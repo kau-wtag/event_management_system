@@ -1,36 +1,43 @@
-<h1>My Events</h1>
+<div class="max-w-7xl mx-auto p-6 bg-white">
+  <h1 class="text-3xl font-bold mb-6">My Events</h1>
 
-<%= link_to 'Create New Event', new_organizer_event_path, class: 'btn btn-primary' %>
+  <!-- Create New Event Button -->
+  <%= link_to 'Create New Event', new_organizer_event_path, class: 'mb-6 inline-block bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-200' %>
 
-<% if @events.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Location</th>
-        <th>Start Date</th>
-        <th>Registration Starts</th>
-        <th>Registration Ends</th>
-        <th>Price</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @events.each do |event| %>
-        <tr>
-          <td><%= link_to event.name, organizer_event_path(event) %></td>
-          <td><%= event.location %></td>
-          <td><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
-          <td><%= event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if event.registration_start_date.present? %></td>
-          <td><%= event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if event.registration_end_date.present? %></td>
-          <td><%= number_to_currency(event.price) %></td>
-          <td>
-            <%= link_to 'Edit', edit_organizer_event_path(event), class: 'btn btn-secondary' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No events created yet.</p>
-<% end %>
+  <% if @events.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto border-collapse border border-gray-200">
+        <thead>
+          <tr class="bg-gray-100 text-left">
+            <th class="border border-gray-200 px-4 py-2">Name</th>
+            <th class="border border-gray-200 px-4 py-2">Location</th>
+            <th class="border border-gray-200 px-4 py-2">Start Date</th>
+            <th class="border border-gray-200 px-4 py-2">Registration Starts</th>
+            <th class="border border-gray-200 px-4 py-2">Registration Ends</th>
+            <th class="border border-gray-200 px-4 py-2">Price</th>
+            <th class="border border-gray-200 px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @events.each do |event| %>
+            <tr class="border-t">
+              <td class="border border-gray-200 px-4 py-2">
+                <%= link_to event.name, organizer_event_path(event), class: 'text-indigo-600 hover:underline' %>
+              </td>
+              <td class="border border-gray-200 px-4 py-2"><%= event.location %></td>
+              <td class="border border-gray-200 px-4 py-2"><%= event.starts_at.strftime("%b %d, %Y %I:%M %p") %></td>
+              <td class="border border-gray-200 px-4 py-2"><%= event.registration_start_date.strftime("%b %d, %Y %I:%M %p") if event.registration_start_date.present? %></td>
+              <td class="border border-gray-200 px-4 py-2"><%= event.registration_end_date.strftime("%b %d, %Y %I:%M %p") if event.registration_end_date.present? %></td>
+              <td class="border border-gray-200 px-4 py-2"><%= number_to_currency(event.price) %></td>
+              <td class="border border-gray-200 px-4 py-2">
+                <%= link_to 'Edit', edit_organizer_event_path(event), class: 'bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition duration-200' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="mt-4 text-gray-700">No events created yet.</p>
+  <% end %>
+</div>
