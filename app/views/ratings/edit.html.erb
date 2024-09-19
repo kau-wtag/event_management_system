@@ -1,17 +1,23 @@
-<h1>Edit Your Review</h1>
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6">Edit Your Review</h1>
 
-<%= form_with model: [@event, @rating], local: true do |f| %>
-  <div>
-    <%= f.label :rating, 'Rating (1-10)' %>
-    <%= f.select :rating, options_for_select((1..10).map { |i| [i, i] }, @rating.rating) %>
-  </div>
+  <%= form_with model: [@event, @rating], local: true, class: "space-y-6" do |f| %>
 
-  <div>
-    <%= f.label :review, 'Your Review' %>
-    <%= f.text_area :review, value: @rating.review %>
-  </div>
+    <!-- Rating Field -->
+    <div>
+      <%= f.label :rating, 'Rating (1-10)', class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.select :rating, options_for_select((1..10).map { |i| [i, i] }, @rating.rating), class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" %>
+    </div>
 
-  <div>
-    <%= f.submit 'Update Review' %>
-  </div>
-<% end %>
+    <!-- Review Field -->
+    <div>
+      <%= f.label :review, 'Your Review', class: "block text-gray-700 font-semibold mb-2" %>
+      <%= f.text_area :review, class: "w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500", rows: 5 %>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="flex justify-end">
+      <%= f.submit 'Update Review', class: "px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
+</div>
