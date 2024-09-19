@@ -1,19 +1,24 @@
-<h1><%= t('registrations.index.title', event_name: link_to(@event.name, @event)).html_safe %></h1>
-<h2><%= t('registrations.index.people_count', count: @event.registrations.count) %></h2>
+<h1 class="text-3xl font-bold mb-6">
+  <%= t('registrations.index.title', event_name: link_to(@event.name, @event, class: "text-indigo-600 hover:underline")).html_safe %>
+</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th><%= t('registrations.index.user') %></th>
-      <th><%= t('registrations.index.registration_date') %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @registrations.each do |r| %>
-      <tr>
-        <td><%= r.user.name %></td>
-        <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+<h2 class="text-xl mb-4"><%= t('registrations.index.people_count', count: @event.registrations.count) %></h2>
+
+<div class="overflow-x-auto">
+  <table class="min-w-full bg-white border border-gray-200">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="px-4 py-2 text-left font-semibold text-gray-700 border-b border-gray-200"><%= t('registrations.index.user') %></th>
+        <th class="px-4 py-2 text-left font-semibold text-gray-700 border-b border-gray-200"><%= t('registrations.index.registration_date') %></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @registrations.each do |r| %>
+        <tr class="border-b border-gray-200">
+          <td class="px-4 py-2 text-gray-700"><%= r.user.name %></td>
+          <td class="px-4 py-2 text-gray-500"><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
