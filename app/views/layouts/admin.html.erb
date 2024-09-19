@@ -1,128 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Admin - EventManagementSystem</title>
+  <title>Admin - WellEvent</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_importmap_tags %>
-
-  <style>
-    /* Container */
-    .admin-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    /* Header */
-    .admin-header {
-      grid-column: span 3;
-      background-color: white;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .admin-header .logo {
-      font-size: 24px;
-      font-weight: 600;
-      color: #1a202c;
-      text-decoration: none;
-    }
-
-    /* Navigation */
-    .admin-nav {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .admin-nav a {
-      color: #4a5568;
-      text-decoration: none;
-      transition: color 0.3s ease, background-color 0.3s ease;
-      text-align: center;
-    }
-
-    .admin-nav a:hover {
-      background-color: #f1f1f1;
-    }
-
-    /* Flash Messages */
-    #flash-messages {
-      grid-column: span 3;
-      margin: 20px 0;
-    }
-
-    .flash-message {
-      margin-bottom: 20px;
-      padding: 10px;
-      border-radius: 4px;
-      color: white;
-    }
-
-    .flash-notice {
-      background-color: #48bb78;
-    }
-
-    .flash-alert {
-      background-color: #f56565;
-    }
-
-    /* Content */
-    .content {
-      grid-column: span 3;
-      background-color: white;
-      padding: 20px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-  </style>
 </head>
 
-<body>
-  <div class="admin-container">
+<body class="bg-gray-100 text-gray-900">
+  <div class="max-w-7xl mx-auto p-6">
     
     <!-- Header Section -->
-    <header class="admin-header">
-      <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: 'logo' %>
-
-      <%= render 'layouts/language_selector' %>
-
-
-      <div class="admin-nav">
-        <%= link_to 'Users', admin_users_path %>
-        <%= link_to 'Categories', admin_categories_path %>
-        <%= link_to 'Events', admin_events_path %>
-        <%= link_to 'Create Event', new_admin_event_path %>
+    <header class="flex justify-between items-center bg-white p-4 rounded-lg shadow-md mb-6">
+      <!-- Admin Dashboard and Navigation Links beside Logo -->
+      <div class="flex items-center space-x-6">
+        <%= link_to 'WellEvent Admin', admin_dashboard_index_path, class: 'text-2xl font-bold text-indigo-600 hover:text-indigo-800' %>
+        <%= link_to 'Users', admin_users_path, class: "#{current_page?(admin_users_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+        <%= link_to 'Categories', admin_categories_path, class: "#{current_page?(admin_categories_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+        <%= link_to 'Events', admin_events_path, class: "#{current_page?(admin_events_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+        <%= link_to 'Create Event', new_admin_event_path, class: "#{current_page?(new_admin_event_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
       </div>
-      <div style="display: flex; align-items: center; gap: 16px;">
-        <%= link_to (current_user.name + ' (ADMIN)'), current_user, style: 'color: #4a5568; text-decoration: none; transition: color 0.3s ease;' %>
-        <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, style: 'color: #4a5568; text-decoration: none; padding: 8px 16px; border: 1px solid #4a5568; border-radius: 8px; transition: color 0.3s ease, background-color 0.3s ease;' %>
-      </div>
+
+      <!-- User Info, Avatar, Language Selector, and Sign Out -->
+      <nav class="flex items-center space-x-6">
+
+        <%= render 'layouts/language_selector' %>
+        <!-- Admin Name and Language Selector -->
+        <%= link_to (current_user.name + ' (ADMIN)'), current_user, class: 'text-gray-700 hover:underline flex items-center' %>
+        <!-- Display Avatar if it exists -->
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: "rounded-full h-10 w-10 object-cover" %>
+        <% end %>
+
+        <!-- Sign Out Button -->
+        <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition duration-200' %>
+      </nav>
     </header>
     
     <!-- Flash Messages Section -->
-    <div id="flash-messages">
-      <% flash.each do |key, message| %>
-        <div class="flash-message flash-<%= key %>">
-          <%= message %>
+    <% if flash.any? %>
+      <div id="flash-messages" class="w-full bg-gray-100 mb-6">
+        <div class="space-y-4">
+          <% flash.each do |key, message| %>
+            <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white rounded-md shadow-md">
+              <%= message %>
+            </div>
+          <% end %>
         </div>
-      <% end %>
-    </div>
-    
+      </div>
+    <% end %>
+
     <!-- Main Content Section -->
-    <div class="content">
+    <main class="bg-white p-6 rounded-lg shadow-md">
       <%= yield %>
-    </div>
+    </main>
 
   </div>
 </body>
