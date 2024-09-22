@@ -23,6 +23,5 @@
   <!-- Action Buttons -->
   <div class="flex space-x-4 mt-6">
     <%= link_to t('admin.users.back_to_users'), admin_users_path, class: 'px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700' %>
-    <%= link_to t('admin.users.actions.delete'), admin_user_path(@user), data: { turbo_method: :delete, turbo_confirm: t('admin.users.delete_confirmation') }, class: 'px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700' %>
   </div>
 </div>
