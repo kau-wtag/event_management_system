@@ -1,10 +1,23 @@
 <h1 class="text-3xl font-bold mb-6"><%= t('registrations.new.title', event_name: @event.name) %></h1>
 
-<%= form_with(model: [@event, @registration], local: true, class: "bg-white") do |f| %>
+<% if @conflicting_events.any? %>
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-6" role="alert">
+    <h3 class="font-bold text-lg">Conflicting Events</h3>
+    <p class="mt-2">You are already registered for the following events that occur on the same date:</p>
+    <ul class="mt-2 list-disc list-inside">
+      <% @conflicting_events.each do |conflicting_event| %>
+        <li>
+          <strong><%= link_to conflicting_event.name, event_path(conflicting_event), class: "text-indigo-600 hover:underline" %></strong>
+          - <%= conflicting_event.starts_at.strftime("%B %d, %Y") %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
+<%= form_with(model: [@event, @registration], local: true, class: "bg-white p-4 shadow-md rounded") do |f| %>
   <!-- Submit Button -->
-  <div class="flex justify-start">
+  <div class="flex justify-start mt-4">
     <%= f.submit t('registrations.form.submit'), class: "px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 cursor-pointer text-lg" %>
   </div>
-
 <% end %>

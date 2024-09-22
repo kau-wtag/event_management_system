@@ -1,5 +1,6 @@
 class RegistrationsController < ApplicationController
   before_action :require_signin
+  before_action :require_user
 
   def index
     @event = Event.find(params[:event_id])
@@ -8,7 +9,15 @@ class RegistrationsController < ApplicationController
 
   def new
     @event = Event.find(params[:event_id])
-    @registration = @event.registrations.new
+
+    # Check if the user is already registered for this event
+    if @event.registrations.exists?(user: current_user)
+      redirect_to event_path(@event), alert: 'You have already registered for this event.'
+    else
+      # Find any other events that the user is registered for that overlap in time
+      @registration = @event.registrations.new
+      @conflicting_events = current_user.registrations.joins(:event).where(events: { starts_at: @event.starts_at.to_date.all_day }).where.not(events: { id: @event.id }).map(&:event)
+    end
   end
 
   def create
