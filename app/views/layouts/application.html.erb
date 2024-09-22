@@ -1,78 +1,70 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>WellEvent</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
-<body class="bg-gray-100 text-gray-900">
-
-<!-- Full-Width Header Section -->
-<header class="bg-white shadow-md w-full z-10 relative">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-    <!-- WellEvent Logo -->
-    <div>
-      <%= link_to 'WellEvent', root_path, class: 'text-3xl font-bold text-gray-900 hover:text-gray-700' %>
-    </div>
-
-    <!-- Navigation Links -->
-    <nav class="flex items-center space-x-6 text-gray-700">
-      <%= link_to 'Home', root_path, class: "#{current_page?(root_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
-    </nav>
-
-    <!-- Right Side (Language Selector, User Info, and Auth Links) -->
-    <div class="flex items-center space-x-4">
-      <!-- Language Selector -->
-      <%= render 'layouts/language_selector' %>
-
-      <% if current_user %>
-        <!-- Admin Link -->
-        <% if current_user.admin? %>
-          <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: "#{current_page?(admin_dashboard_index_path) ? 'underline font-bold' : 'hidden md:inline-block text-gray-700 hover:underline'}" %>
-        <% end %>
-
-        <!-- Avatar and User Info -->
-        <% if current_user.avatar.attached? %>
-          <%= image_tag current_user.avatar, class: "rounded-full h-10 w-10 object-cover" %>
-        <% end %>
-        <%= link_to (current_user.name + (current_user.admin? ? ' (ADMIN)' : '')), current_user, class: 'text-gray-700 hover:underline flex items-center' %>
-
-        <!-- Sign Out -->
-        <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition duration-200' %>
-      <% else %>
-        <!-- Sign Up and Sign In for Non-authenticated Users -->
-        <%= link_to 'Sign Up', signup_path, class: 'px-4 py-2 border border-gray-700 text-gray-700 rounded hover:bg-gray-700 hover:text-white transition-colors duration-200' %>
-        <%= link_to 'Sign In', new_session_path, class: 'px-4 py-2 border border-gray-700 text-gray-700 rounded hover:bg-gray-700 hover:text-white transition-colors duration-200' %>
-      <% end %>
-    </div>
-  </div>
-</header>
-
-  <!-- Flash Messages Section -->
-  <% if flash.any? %> 
-    <!-- Full-width container for flash messages -->
-    <div id="flash-messages" class="w-full bg-gray-100">
-      <div class="max-w-7xl mx-auto space-y-4">
-        <% flash.each do |key, message| %>
-          <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white">
-            <%= message %>
-          </div>
-        <% end %>
+  <head>
+    <title>WellEvent</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body class="bg-gray-100 text-gray-900">
+    <!-- Full-Width Header Section -->
+    <header class="bg-white shadow-md w-full z-10 relative">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+        <!-- WellEvent Logo -->
+        <div>
+          <%= link_to 'WellEvent', root_path, class: 'text-3xl font-bold text-gray-900 hover:text-gray-700' %>
+        </div>
+        <!-- Navigation Links -->
+        <nav class="flex items-center space-x-6 text-gray-700">
+          <%= link_to 'Home', root_path, class: "#{current_page?(root_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+        </nav>
+        <!-- Right Side (Language Selector, User Info, and Auth Links) -->
+        <div class="flex items-center space-x-4">
+          <!-- Language Selector -->
+          <% if current_user %>
+            <!-- Admin Link -->
+            <% if current_user.admin? %>
+              <%= link_to 'Admin Dashboard', admin_dashboard_index_path, class: "#{current_page?(admin_dashboard_index_path) ? 'underline font-bold' : 'hidden md:inline-block text-gray-700 hover:underline'}" %>
+            <% end %>
+            <!-- Avatar and User Info -->
+            <div class="flex items-center space-x-2">
+              <% if current_user.avatar.attached? %>
+                <%= link_to image_tag(current_user.avatar, class: "rounded-full h-10 w-10 object-cover outline outline-indigo-600 hover:outline-offset-2"), current_user %>
+              <% else %>
+                <%= link_to current_user.name, current_user, class: 'text-gray-700 hover:underline flex items-center' %>
+              <% end %>
+            </div>
+            <!-- Sign Out -->
+            <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition duration-200' %>
+          <% else %>
+            <!-- Sign Up and Sign In for Non-authenticated Users -->
+            <%= link_to 'Sign Up', signup_path, class: 'px-4 py-2 border border-gray-700 text-gray-700 rounded hover:bg-gray-700 hover:text-white transition-colors duration-200' %>
+            <%= link_to 'Sign In', new_session_path, class: 'px-4 py-2 border border-gray-700 text-gray-700 rounded hover:bg-gray-700 hover:text-white transition-colors duration-200' %>
+          <% end %>
+          <%= render 'layouts/language_selector' %>
+        </div>
       </div>
-    </div>
-  <% end %>
-
-  <!-- Main Content Section -->
-  <main class="max-w-7xl mx-auto px-4 py-6 bg-white mt-5">
-    <%= yield %>
-  </main>
-
-</body>
+    </header>
+    <!-- Flash Messages Section -->
+    <% if flash.any? %>
+      <!-- Full-width container for flash messages -->
+      <div id="flash-messages" class="w-full bg-gray-100">
+        <div class="max-w-7xl mx-auto space-y-4">
+          <% flash.each do |key, message| %>
+            <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white">
+              <%= message %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <!-- Main Content Section -->
+    <main class="max-w-7xl mx-auto px-4 py-6 bg-white mt-5">
+      <%= yield %>
+    </main>
+  </body>
 </html>
