@@ -5,13 +5,13 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   # Localized routing for multilingual support
-  scope "(:locale)", locale: /en|es/ do
+  scope '(:locale)', locale: /en|es/ do
     # Admin namespace for admin-specific routes
     namespace :admin do
       get 'dashboard/index'
-      resources :events, only:[:index, :show]
-      resources :users, only: [:index, :show]
-      resources :categories, only: [:new, :index, :edit, :create, :destroy]
+      resources :events, only: %i[index show]
+      resources :users, only: %i[index show]
+      resources :categories, except: %i[show]
       resource :locations
     end
 
@@ -23,10 +23,10 @@ Rails.application.routes.draw do
     end
 
     # Root route for events listing
-    root "events#index"
-    
+    root 'events#index'
+
     # Session management (login/logout)
-    resource :session, only: [:new, :create, :destroy]
+    resource :session, only: %i[new create destroy]
 
     # Users routes for profile management
     resources :users do
@@ -39,22 +39,22 @@ Rails.application.routes.draw do
     get 'signup/organizer', to: 'users#new_organizer', as: 'signup_organizer'
     post 'signup/user', to: 'users#create_user'
     post 'signup/organizer', to: 'users#create_organizer'
-    
+
     # Main events routes for users and general visitors
     resources :events do
       resources :registrations
-      resources :comments, only: [:create, :destroy]
-      resource :like, only: [:create, :destroy]
-      resource :favorite, only: [:create, :destroy]
-      resources :ratings, only: [:new, :create, :edit, :update, :destroy]
-      resource :follow, only: [:create, :destroy]
+      resources :comments, only: %i[create destroy]
+      resource :like, only: %i[create destroy]
+      resource :favorite, only: %i[create destroy]
+      resources :ratings, only: %i[new create edit update destroy]
+      resource :follow, only: %i[create destroy]
     end
-    
+
     # Email verification route
     get 'verify_email', to: 'email_verifications#verify', as: 'verify_email'
-    
+
     # Password reset routes
-    resources :password_resets, only: [:new, :create]
+    resources :password_resets, only: %i[new create]
     get 'password_resets/:token/edit', to: 'password_resets#edit', as: 'edit_password_reset'
     patch 'password_resets/:token', to: 'password_resets#update', as: 'password_reset'
   end
