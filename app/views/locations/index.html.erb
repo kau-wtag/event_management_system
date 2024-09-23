@@ -1,0 +1,31 @@
+<h1 class="text-3xl font-bold mb-6">Locations</h1>
+
+<% if current_user&.admin? || current_user&.organizer? %>
+  <%= link_to 'New Location', new_location_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block" %>
+<% end %>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <% @locations.each do |location| %>
+    <div class="bg-white rounded-lg shadow-md p-4">
+      <% if location.image.attached? %>
+        <%= image_tag location.image, class: "w-full h-48 object-cover rounded-t-lg" %>
+      <% else %>
+        <div class="w-full h-48 bg-gray-200 flex items-center justify-center rounded-t-lg">
+          <span class="text-gray-500">No Image</span>
+        </div>
+      <% end %>
+
+      <div class="p-4">
+        <h2 class="text-xl font-bold mb-2"><%= link_to location.name, location, class: "text-blue-500 hover:underline" %></h2>
+        <p class="text-gray-600"><strong>Rent Cost:</strong> <%= number_to_currency(location.rent_cost) %></p>
+        <p class="text-gray-600"><strong>Capacity:</strong> <%= location.capacity.present? ? location.capacity : 'N/A' %></p>
+        <% if location.full_address.present? %>
+          <p class="text-gray-600"><strong>Address:</strong> <%= location.full_address %></p>
+        <% end %>
+        <% if location.google_map_link.present? %>
+          <p class="text-blue-500"><%= link_to 'View on Map', location.google_map_link, target: '_blank', class: "hover:underline" %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

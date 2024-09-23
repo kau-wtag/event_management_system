@@ -1,0 +1,41 @@
+<h1 class="text-3xl font-bold mb-6"><%= @location.name %></h1>
+<div class="bg-white rounded-lg shadow-md p-6">
+  <% if @location.image.attached? %>
+    <%= image_tag @location.image, class: "w-full h-64 object-cover rounded-md mb-4" %>
+  <% else %>
+    <div class="w-full h-64 bg-gray-200 flex items-center justify-center rounded-md mb-4">
+      <span class="text-gray-500">No Image Available</span>
+    </div>
+  <% end %>
+  <div class="space-y-4">
+    <p class="text-gray-700"><strong>Rent Cost:</strong> <%= number_to_currency(@location.rent_cost) %></p>
+    <p class="text-gray-700"><strong>Capacity:</strong> <%= @location.capacity.present? ? @location.capacity : 'N/A' %></p>
+    <% if @location.full_address.present? %>
+      <p class="text-gray-700"><strong>Full Address:</strong> <%= @location.full_address %></p>
+    <% end %>
+    <% if @location.description.present? %>
+      <p class="text-gray-700"><strong>Description:</strong> <%= @location.description %></p>
+    <% end %>
+    <% if @location.google_map_link.present? %>
+      <p><strong>Google Map:</strong> <%= link_to 'View on Map', @location.google_map_link, target: '_blank', class: "text-blue-500 hover:underline" %></p>
+    <% end %>
+    <% if @location.contact_number.present? %>
+      <p class="text-gray-700"><strong>Contact Number:</strong> <%= @location.contact_number %></p>
+    <% end %>
+    <% if @location.contact_email.present? %>
+      <p class="text-gray-700"><strong>Contact Email:</strong> <%= @location.contact_email %></p>
+    <% end %>
+  </div>
+  <!-- Action Buttons -->
+  <% if current_user&.admin? %>
+    <div class="mt-6 flex space-x-4">
+      <%= link_to 'Edit', edit_location_path(@location), class: "bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded" %>
+      <%= link_to 'Delete', @location, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: "bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  <% elsif current_user&.organizer? %>
+    <div class="mt-6">
+      <%= link_to 'Edit', edit_location_path(@location), class: "bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded" %>
+    </div>
+  <% end %>
+</div>
+<%= link_to 'Back to Locations', locations_path, class: "mt-6 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>

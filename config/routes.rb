@@ -50,6 +50,12 @@ Rails.application.routes.draw do
       resource :follow, only: %i[create destroy]
     end
 
+    resources :locations do
+      member do
+        delete :delete_image
+      end
+    end
+
     # Email verification route
     get 'verify_email', to: 'email_verifications#verify', as: 'verify_email'
 
