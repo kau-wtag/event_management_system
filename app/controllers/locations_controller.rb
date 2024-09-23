@@ -2,6 +2,8 @@ class LocationsController < ApplicationController
   before_action :set_location, only: %i[show edit update destroy]
   before_action :require_admin, except: %i[index show]
 
+  layout :set_layout
+
   def index
     @locations = Location.all.order(created_at: :desc)
   end
@@ -24,9 +26,7 @@ class LocationsController < ApplicationController
   def edit; end
 
   def update
-    if location_params[:image].present? && @location.image.attached?
-      @location.image.purge
-    end
+    @location.image.purge if location_params[:image].present? && @location.image.attached?
 
     if @location.update(location_params)
       redirect_to @location, notice: 'Location was successfully updated.'

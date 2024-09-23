@@ -10,6 +10,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def set_layout
+    return 'admin' if current_user&.admin?
+    return 'organizer' if current_user&.organizer?
+
+    'application' # Default layout for users
+  end
+
   # Fetch the current user from session
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])

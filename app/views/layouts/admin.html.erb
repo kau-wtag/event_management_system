@@ -1,63 +1,56 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Admin - WellEvent</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
-
-  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-  <%= javascript_importmap_tags %>
-</head>
-
-<body class="bg-gray-100 text-gray-900">
-  <div class="max-w-7xl mx-auto p-6">
-    
-    <!-- Header Section -->
-    <header class="flex justify-between items-center bg-white p-4 rounded-lg shadow-md mb-6">
-      <!-- Admin Dashboard and Navigation Links beside Logo -->
-      <div class="flex items-center space-x-6">
-        <%= link_to 'WellEvent Admin', admin_dashboard_index_path, class: 'text-2xl font-bold text-indigo-600 hover:text-indigo-800' %>
-        <%= link_to 'Users', admin_users_path, class: "#{current_page?(admin_users_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
-        <%= link_to 'Categories', admin_categories_path, class: "#{current_page?(admin_categories_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
-        <%= link_to 'Events', admin_events_path, class: "#{current_page?(admin_events_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
-      </div>
-
-      <!-- User Info, Avatar, Language Selector, and Sign Out -->
-      <nav class="flex items-center space-x-6">
-
-        <%= render 'layouts/language_selector' %>
-        <!-- Admin Name and Language Selector -->
-        <%= link_to (current_user.name + ' (ADMIN)'), current_user, class: 'text-gray-700 hover:underline flex items-center' %>
-        <!-- Display Avatar if it exists -->
-        <% if current_user.avatar.attached? %>
-          <%= image_tag current_user.avatar, class: "rounded-full h-10 w-10 object-cover" %>
-        <% end %>
-
-        <!-- Sign Out Button -->
-        <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition duration-200' %>
-      </nav>
-    </header>
-    
-    <!-- Flash Messages Section -->
-    <% if flash.any? %>
-      <div id="flash-messages" class="w-full bg-gray-100 mb-6">
-        <div class="space-y-4">
-          <% flash.each do |key, message| %>
-            <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white rounded-md shadow-md">
-              <%= message %>
-            </div>
-          <% end %>
+  <head>
+    <title>Admin - WellEvent</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="bg-gray-100 text-gray-900">
+    <div class="max-w-7xl mx-auto p-6">
+      <!-- Header Section -->
+      <header class="flex justify-between items-center bg-white p-4 rounded-lg shadow-md mb-6">
+        <!-- Admin Dashboard and Navigation Links beside Logo -->
+        <div class="flex items-center space-x-6">
+          <%= link_to 'WellEvent Admin', admin_dashboard_index_path, class: 'text-2xl font-bold text-indigo-600 hover:text-indigo-800' %>
+          <%= link_to 'Users', admin_users_path, class: "#{current_page?(admin_users_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+          <%= link_to 'Categories', admin_categories_path, class: "#{current_page?(admin_categories_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+          <%= link_to 'Events', admin_events_path, class: "#{current_page?(admin_events_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
+          <%= link_to 'Locations', locations_path, class: "#{current_page?(locations_path) ? 'underline font-bold underline-offset-4' : 'hover:underline underline-offset-4 transition duration-200'}" %>
         </div>
-      </div>
-    <% end %>
-
-    <!-- Main Content Section -->
-    <main class="bg-white p-6 rounded-lg shadow-md">
-      <%= yield %>
-    </main>
-
-  </div>
-</body>
+        <!-- User Info, Avatar, Language Selector, and Sign Out -->
+        <nav class="flex items-center space-x-6">
+          <%= render 'layouts/language_selector' %>
+          <!-- Admin Name and Language Selector -->
+          <!-- Display Avatar if it exists -->
+          <% if current_user.avatar.attached? %>
+            <%= link_to (image_tag current_user.avatar, class: "rounded-full h-10 w-10 object-cover"), current_user %>
+          <% else %>
+            <%= link_to (current_user.name), current_user, class: 'text-gray-700 hover:underline flex items-center' %>
+          <% end %>
+          <!-- Sign Out Button -->
+          <%= link_to 'Sign Out', session_path, data: { turbo_method: :delete }, class: 'px-4 py-2 bg-gray-100 text-gray-700 border border-gray-300 rounded hover:bg-gray-200 transition duration-200' %>
+        </nav>
+      </header>
+      <!-- Flash Messages Section -->
+      <% if flash.any? %>
+        <div id="flash-messages" class="w-full bg-gray-100 mb-6">
+          <div class="space-y-4">
+            <% flash.each do |key, message| %>
+              <div class="p-4 <% if key == 'notice' %>bg-green-500<% else %>bg-red-500<% end %> text-white rounded-md shadow-md">
+                <%= message %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <!-- Main Content Section -->
+      <main class="bg-white p-6 rounded-lg shadow-md">
+        <%= yield %>
+      </main>
+    </div>
+  </body>
 </html>
